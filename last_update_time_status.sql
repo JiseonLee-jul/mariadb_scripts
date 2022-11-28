@@ -1,0 +1,1 @@
+SHOW TABLE STATUS FROM Database_Name LIKE 'Table_Name';
