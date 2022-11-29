@@ -1,8 +1,8 @@
-DROP database IF EXISTS `[db명]`;
+DROP database IF EXISTS shoppingmall;
 
-create database management4;
+create database shoppingmall;
 
-use management4;
+use shoppingmall;
 
  create table customer
 (

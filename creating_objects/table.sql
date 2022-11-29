@@ -1,4 +1,4 @@
-USE database test;
+USE database shoppingmall;
 
 create table employee
 (
