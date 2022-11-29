@@ -14,6 +14,3 @@ create table test_part_range
  partition p20200303 values less than
           (to_days('2020-03-04 00:00:00')),
  partition pmax values less than maxvalue);
-
-
--- select * from information_schema.partitions where table_name='test_part_range'\G;

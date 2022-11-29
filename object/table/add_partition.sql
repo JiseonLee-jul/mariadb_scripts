@@ -1,1 +1,0 @@
-alter table tb_part_test add partition(partition p20200304 values less than (to_days('2020-03-05 00:00:00')));
