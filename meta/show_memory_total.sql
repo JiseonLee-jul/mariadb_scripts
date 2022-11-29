@@ -1,0 +1,1 @@
+select a.* from sys.memory_global_total a

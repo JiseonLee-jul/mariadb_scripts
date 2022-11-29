@@ -1,0 +1,1 @@
+alter table test add (phone varchar(11) default null);
