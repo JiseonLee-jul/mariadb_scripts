@@ -1,0 +1,1 @@
+alter table test_part_range drop partition P20200301;

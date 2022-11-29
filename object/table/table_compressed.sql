@@ -5,3 +5,4 @@ use create test_com
 name varchar(32),
 ins_date datetime)
 row_format=compressed;
+

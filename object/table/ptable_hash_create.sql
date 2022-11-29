@@ -3,4 +3,4 @@ create table test_part_hash
  email varchar(30),
  job_grade int not null)
  partition by hash (job_grade)
-partition 8;
+partitions 8;
