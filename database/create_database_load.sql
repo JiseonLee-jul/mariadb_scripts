@@ -51,7 +51,7 @@ create table purchase
         purchs_no int not null
 );
 
-LOAD DATA LOCAL INFILE '/root/database/customer.csv'
+LOAD DATA LOCAL INFILE '/root/scripts/csv/customer.csv'
 INTO TABLE customer
 CHARACTER SET utf8
 FIELDS TERMINATED BY ','
@@ -59,7 +59,7 @@ ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS;
 
-LOAD DATA LOCAL INFILE '/root/database/code.csv'
+LOAD DATA LOCAL INFILE '/root/scripts/csv/code.csv'
 INTO TABLE code
 CHARACTER SET utf8
 FIELDS TERMINATED BY ','
@@ -67,7 +67,7 @@ ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS;
 
-LOAD DATA LOCAL INFILE '/root/database/employee.csv'
+LOAD DATA LOCAL INFILE '/root/scripts/csv/employee.csv'
 INTO TABLE employee
 CHARACTER SET utf8
 FIELDS TERMINATED BY ','
@@ -75,7 +75,7 @@ ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS;
 
-LOAD DATA LOCAL INFILE '/root/database/product.csv'
+LOAD DATA LOCAL INFILE '/root/scripts/csv/product.csv'
 INTO TABLE product
 CHARACTER SET utf8
 FIELDS TERMINATED BY ','
@@ -83,7 +83,7 @@ ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS;
 
-LOAD DATA LOCAL INFILE '/root/database/purchase.csv'
+LOAD DATA LOCAL INFILE '/root/scripts/csv/purchase.csv'
 INTO TABLE purchase
 CHARACTER SET utf8
 FIELDS TERMINATED BY ','
