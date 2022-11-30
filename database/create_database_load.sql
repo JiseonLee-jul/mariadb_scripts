@@ -1,8 +1,8 @@
-DROP database IF EXISTS `[db명]`;
+DROP database IF EXISTS shoppingmall;
 
-create database management4;
+create database shoppingmall;
 
-use management4;
+use shoppingmall;
 
  create table customer
 (
@@ -51,7 +51,7 @@ create table purchase
         purchs_no int not null
 );
 
-LOAD DATA LOCAL INFILE '/root/scripts/csv/customer.csv'
+LOAD DATA LOCAL INFILE '/root/mariadb_scripts/csv/customer.csv'
 INTO TABLE customer
 CHARACTER SET utf8
 FIELDS TERMINATED BY ','
@@ -59,7 +59,7 @@ ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS;
 
-LOAD DATA LOCAL INFILE '/root/scripts/csv/code.csv'
+LOAD DATA LOCAL INFILE '/root/mariadb_scripts/csv/code.csv'
 INTO TABLE code
 CHARACTER SET utf8
 FIELDS TERMINATED BY ','
@@ -67,7 +67,7 @@ ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS;
 
-LOAD DATA LOCAL INFILE '/root/scripts/csv/employee.csv'
+LOAD DATA LOCAL INFILE '/root/mariadb_scripts/csv/employee.csv'
 INTO TABLE employee
 CHARACTER SET utf8
 FIELDS TERMINATED BY ','
@@ -75,7 +75,7 @@ ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS;
 
-LOAD DATA LOCAL INFILE '/root/scripts/csv/product.csv'
+LOAD DATA LOCAL INFILE '/root/mariadb_scripts/csv/product.csv'
 INTO TABLE product
 CHARACTER SET utf8
 FIELDS TERMINATED BY ','
@@ -83,7 +83,7 @@ ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS;
 
-LOAD DATA LOCAL INFILE '/root/scripts/csv/purchase.csv'
+LOAD DATA LOCAL INFILE '/root/mariadb_scripts/csv/purchase.csv'
 INTO TABLE purchase
 CHARACTER SET utf8
 FIELDS TERMINATED BY ','
