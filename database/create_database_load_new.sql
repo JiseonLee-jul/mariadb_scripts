@@ -6,49 +6,49 @@ use management;
 
  create table customer
 (
-        cstmr_no int not null,
-        cstmr_nm varchar(10) not null,
-        telno varchar(50) not null,
-        adres varchar(50) not null,
+        id int not null,
+        name varchar(10) not null,
+        phone varchar(50) not null,
+        address varchar(50) not null,
         age int not null,
-        cstmrgrad varchar(50) not null,
-        chrg_emp_code int not null
+        rank varchar(50) not null,
+        emp_id int not null
 );
 
 create table employee
 (
-        emp_no int not null,
-        emp_code int not null,
-        emp_nm varchar(10) not null,
-        clsf varchar(10) not null,
-        sexdstn varchar(10) not null,
-        ecny_yy_nt_de varchar(20) not null,
+        id int not null,
+        code int not null,
+        name varchar(10) not null,
+        rank varchar(10) not null,
+        sex varchar(10) not null,
+        s_date varchar(20) not null,
         dept_code int not null
 );
 
 create table code
 (
-        code_no int not null,
-        code_group varchar(10) not null,
-        code_cl varchar(10) not null,
-        code_nm varchar(10) not null
+        id int not null,
+        group varchar(10) not null,
+        class varchar(10) not null,
+        name varchar(10) not null
 );
 
 create table product
 (
-        goods_no int not null,
-        goods_nm varchar(20) not null,
-        goods_se varchar(10) not null,
-        pc int not null,
-        invntry int not null
+        id int not null,
+        name varchar(20) not null,
+        group varchar(10) not null,
+        price int not null,
+        inventory int not null
 );
 
 create table purchase
 (
-        prchs_no int not null,
-        cstmr_no int not null,
-        goods_no int not null,
-        purchs_no int not null
+        id int not null,
+        cst_id int not null,
+        prd_id int not null,
+        num int not null
 );
 
 LOAD DATA LOCAL INFILE '/root/mariadb_scripts/csv/customer.csv'
