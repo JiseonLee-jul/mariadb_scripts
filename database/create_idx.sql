@@ -1,4 +1,4 @@
-use shoppingmall;
+use management;
 
 create index product_goods_no_pk on customer(cstmr_no);
 create index product_goods_no_pk on employee(EMP_NO);
