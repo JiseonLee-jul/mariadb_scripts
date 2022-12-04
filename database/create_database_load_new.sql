@@ -29,7 +29,7 @@ create table employee
 create table code
 (
         id int not null,
-        group varchar(10) not null,
+        grp varchar(10) not null,
         class varchar(10) not null,
         name varchar(10) not null
 );
@@ -38,7 +38,7 @@ create table product
 (
         id int not null,
         name varchar(20) not null,
-        group varchar(10) not null,
+        grp varchar(10) not null,
         price int not null,
         inventory int not null
 );
