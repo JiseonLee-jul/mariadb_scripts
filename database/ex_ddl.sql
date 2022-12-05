@@ -85,10 +85,11 @@ alter table customer change phone tel varchar(20);
 alter table customer modify tel varchar(20) after name;
 
 ---- 제약조건 추가/제거
-alter table customer drop primary key; -- 에러 -> 이유 : auto_increment 먼저 제거
+alter table customer drop primary key; -- 에러 -> 이유 : auto_increment 먼저 제거 (auto_increment는 primary key 설정해야함)
 alter table customer drop primary key, modify id int(11);
 
 
 -------------- DROP ---------------
 truncate table customer;
 drop table customer;
+drop database management;
