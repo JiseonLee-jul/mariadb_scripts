@@ -16,11 +16,8 @@ show databases;
 create database management;
 use management;
 create table customer(
-    id int not null,
-    name varchar(10) not null,
-    address varchar(20),
-    phone varchar(20),
-    age int
+    id int,
+    name varchar(10)
 );
 desc customer;
 
@@ -44,6 +41,15 @@ create table customer(
     primary key(id)
 );
 
+-- 제약 조건 : default
+create table customer(
+    id int primary key,
+    name varchar(10) not null,
+    address varchar(20) default 'seoul',
+    phone varchar(20) unique,
+    age int, 
+);
+
 -- 제약 조건 : auto_increment
 create table customer(
     id int auto_increment,
@@ -54,17 +60,9 @@ create table customer(
     primary key(id)
 );
 
--- 제약 조건 : default
-create table customer(
-    id int auto_increment,
-    name varchar(10) not null,
-    address varchar(20) default 'seoul',
-    phone varchar(20) unique,
-    age int,
-    primary key(id)
-);
-
-
+show full tables;
+show full columns from customer;
+ 
 ------------ ALTER ---------------
 ---- table 
 -- table 이름 변경
