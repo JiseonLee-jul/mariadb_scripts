@@ -93,3 +93,4 @@ alter table customer drop primary key, modify id int(11);
 truncate table customer;
 drop table customer;
 drop database management;
+
