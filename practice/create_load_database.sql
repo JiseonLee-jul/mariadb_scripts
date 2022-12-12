@@ -11,7 +11,7 @@ CREATE TABLE `customer` (
 	`age`	int	NULL,
 	`nickname`	varchar(20)	NULL,
 	`phone`	char(13)	NULL,
-	`email`	varcahr(30)	NULL
+	`email`	varchar(30)	NULL
 );
 
 CREATE TABLE `ord` (
