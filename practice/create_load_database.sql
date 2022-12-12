@@ -1,59 +1,91 @@
-DROP DATABASE IF EXISTS humansource;
+DROP DATABASE IF EXISTS cafe;
 
-CREATE DATABASE humansource;
+CREATE DATABASE cafe;
 
-USE humansource;
+USE cafe;
 
- create table emp
-(
-        deptname varchar(50) not null,
-        empno int not null,
-        empname varchar(50) not null,
-        position varchar(50) not null,
-        manager int not null,
-        hiredate date not null,
-        salary int not null,
-        bonus int not null,
-        cellphone varchar(20) not null,
-        email varchar(50) not null
+CREATE TABLE `customer` (
+	`id`	int	NOT NULL	COMMENT 'auto_increment',
+	`name`	varchar(20)	NULL,
+	`gender`	char(1)	NULL,
+	`age`	int	NULL,
+	`nickname`	varchar(20)	NULL,
+	`phone`	char(13)	NULL,
+	`email`	varcahr(30)	NULL
 );
 
-create table dept
-(
-        deptno int not null,
-        deptname int not null,
-        loation varchar(20) not null
+CREATE TABLE `ord` (
+	`id`	int	NOT NULL,
+	`customer_id`	int	NOT NULL	COMMENT 'auto_increment',
+	`date_ordered`	date	NULL,
+	`sales_rep_id`	varchar(10)	NULL,
+	`total`	int	NULL,
+	`product_id`	int	NOT NULL,
+	`Key`	int	NOT NULL
 );
 
-create table salarygrade
-(
-        id int not null,
-        grp varchar(10) not null,
-        class varchar(10) not null,
-        name varchar(10) not null
+CREATE TABLE `emp` (
+	`Key`	int	NOT NULL,
+	`name`	varchar(20)	NULL,
+	`start_date`	date	NULL,
+	`salary`	int	NULL
+);
+
+CREATE TABLE `beverage` (
+	`product_id`	int	NOT NULL,
+	`product_name`	varchar(30)	NULL,
+	`category`	varchar(10)	NULL,
+	`price`	int	NULL,
+	`show_flag`	char(1)	NULL
+);
+
+CREATE TABLE `nutrition_info` (
+	`product_id`	int	NOT NULL,
+	`kcal`	int	NULL,
+	`fat`	int	NULL,
+	`natrium`	int	NULL,
+	`sugar`	int	NULL,
+	`protein`	int	NULL,
+	`caffein`	int	NULL
 );
 
 
-LOAD DATA LOCAL INFILE '/root/repo/mariadb_scripts/practice/emp.csv'
+LOAD DATA LOCAL INFILE '/root/repo/mariadb_scripts/practice/csv/customer.csv'
+INTO TABLE customer
+CHARACTER SET utf8
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGONRE 1 ROWS;
+
+LOAD DATA LOCAL INFILE '/root/repo/mariadb_scripts/practice/csv/ord.csv'
+INTO TABLE ord
+CHARACTER SET utf8
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGONRE 1 ROWS;
+
+LOAD DATA LOCAL INFILE '/root/repo/mariadb_scripts/practice/csv/emp.csv'
 INTO TABLE emp
 CHARACTER SET utf8
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
-IGONRE 1 LINES
+IGONRE 1 ROWS;
 
-LOAD DATA LOCAL INFILE '/root/repo/mariadb_scripts/practice/dept.csv'
-INTO TABLE dept
+LOAD DATA LOCAL INFILE '/root/repo/mariadb_scripts/practice/csv/beverage.csv'
+INTO TABLE beverage
 CHARACTER SET utf8
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
-IGONRE 1 LINES
+IGONRE 1 ROWS;
 
-LOAD DATA LOCAL INFILE '/root/repo/mariadb_scripts/practice/salarygrade.csv'
-INTO TABLE salarygrade
+LOAD DATA LOCAL INFILE '/root/repo/mariadb_scripts/practice/csv/nutrition_info.csv'
+INTO TABLE nutrition_info
 CHARACTER SET utf8
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
-IGONRE 1 LINES
+IGONRE 1 ROWS;
