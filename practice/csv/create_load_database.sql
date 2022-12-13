@@ -19,7 +19,6 @@ CREATE TABLE `ord` (
 	`id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	`customer_id` int NOT NULL,
 	`date_ordered` datetime,
-	`total`	int,
 	`beverage_id` int NOT NULL,
 	`emp_id` int NOT NULL,
 	CONSTRAINT fk_customer_id FOREIGN KEY (customer_id) REFERENCES customer(id),
