@@ -1,4 +1,5 @@
 ---------- 1. insert : 데이터 추가하기 -----------
+use cafe;
 desc beverage;
 
 -- a. insert into ... {value/values} ... 
@@ -8,4 +9,4 @@ insert into beverage (name, category, price, show_flag) value ('FlatWhite', 'Hot
 insert into beverage (category, name, show_flag, price) value ('HotTeas', 'GrapefruitHoneyBlackTea', 'Y', 5500);
 
 -- b. insert into ... set ...
-insert into 
+insert into customer set name 

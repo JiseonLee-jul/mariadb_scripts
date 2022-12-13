@@ -1,53 +1,59 @@
-DROP DATABASE IF EXISTS cafe;
+﻿DROP DATABASE IF EXISTS cafe;
 
 CREATE DATABASE cafe;
 
 USE cafe;
 
+
 CREATE TABLE `customer` (
-	`id`	int	NOT NULL	COMMENT 'auto_increment',
-	`name`	varchar(20)	NULL,
-	`gender`	char(1)	NULL,
-	`age`	int	NULL,
-	`nickname`	varchar(20)	NULL,
-	`phone`	char(13)	NULL,
-	`email`	varchar(30)	NULL
+	`id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	`name`	varchar(20) NOT NULL,
+	`gender` char(1),
+	`age` int,
+	`nickname` varchar(20) NOT NULL,
+	`phone`	varchar(20)	NOT NULL,
+	`email`	varchar(30)
 );
 
 CREATE TABLE `ord` (
-	`id`	int	NOT NULL,
-	`customer_id`	int	NOT NULL	COMMENT 'auto_increment',
-	`date_ordered`	date	NULL,
-	`sales_rep_id`	varchar(10)	NULL,
-	`total`	int	NULL,
-	`product_id`	int	NOT NULL,
-	`Key`	int	NOT NULL
+	`id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	`customer_id` int NOT NULL,
+	`date_ordered` datetime,
+	`total`	int,
+	`beverage_id` int NOT NULL,
+	`emp_id` int NOT NULL,
+	CONSTRAINT fk_customer_id FOREIGN KEY (customer_id) REFERENCES customer(id),
+	CONSTRAINT fk_beverage_id FOREIGN KEY (beverage_id) REFERENCES beverage(id),
+	CONSTRAINT fk_emp_id FOREIGN KEY (emp_id) REFERENCES emp(id)	
 );
 
 CREATE TABLE `emp` (
-	`Key`	int	NOT NULL,
-	`name`	varchar(20)	NULL,
-	`start_date`	date	NULL,
-	`salary`	int	NULL
+	`id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	`name`	varchar(20)	NOT NULL,
+	`start_date` date NOT NULL,
+	`salary` varchar(20) NOT NULL,
+	`dept_id` varchar(20) NOT NULL
 );
 
 CREATE TABLE `beverage` (
-	`product_id`	int	NOT NULL,
-	`product_name`	varchar(30)	NULL,
-	`category`	varchar(10)	NULL,
-	`price`	int	NULL,
-	`show_flag`	char(1)	NULL
+	`id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	`name` varchar(30) NOT NULL UNIQUE,
+	`category` varchar(10) NOT NULL,
+	`price` int	NOT NULL,
+	`show_flag`	char(1)	NOT NULL	
 );
 
 CREATE TABLE `nutrition_info` (
-	`product_id`	int	NOT NULL,
-	`kcal`	int	NULL,
-	`fat`	int	NULL,
-	`natrium`	int	NULL,
-	`sugar`	int	NULL,
-	`protein`	int	NULL,
-	`caffein`	int	NULL
+	`beverage_id` int NOT NULL,
+	`kcal` int,
+	`fat` int,
+	`natrium` int,
+	`sugar`	int,
+	`protein` int,
+	`caffein` int,
+	CONSTRAINT fk_beverage_id FOREIGN KEY (beverage_id) REFERENCES beverage(id)
 );
+
 
 
 LOAD DATA LOCAL INFILE '/root/repo/mariadb_scripts/practice/csv/customer.csv'
