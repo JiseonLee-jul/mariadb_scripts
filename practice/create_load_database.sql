@@ -56,7 +56,7 @@ CHARACTER SET utf8
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
-IGONRE 1 ROWS;
+IGNORE 1 ROWS;
 
 LOAD DATA LOCAL INFILE '/root/repo/mariadb_scripts/practice/csv/ord.csv'
 INTO TABLE ord
@@ -64,7 +64,7 @@ CHARACTER SET utf8
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
-IGONRE 1 ROWS;
+IGNORE 1 ROWS;
 
 LOAD DATA LOCAL INFILE '/root/repo/mariadb_scripts/practice/csv/emp.csv'
 INTO TABLE emp
@@ -72,7 +72,7 @@ CHARACTER SET utf8
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
-IGONRE 1 ROWS;
+IGNORE 1 ROWS;
 
 LOAD DATA LOCAL INFILE '/root/repo/mariadb_scripts/practice/csv/beverage.csv'
 INTO TABLE beverage
@@ -80,7 +80,7 @@ CHARACTER SET utf8
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
-IGONRE 1 ROWS;
+IGNORE 1 ROWS;
 
 LOAD DATA LOCAL INFILE '/root/repo/mariadb_scripts/practice/csv/nutrition_info.csv'
 INTO TABLE nutrition_info
@@ -88,4 +88,4 @@ CHARACTER SET utf8
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
-IGONRE 1 ROWS;
+IGNORE 1 ROWS;
