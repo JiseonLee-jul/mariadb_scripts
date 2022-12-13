@@ -10,7 +10,7 @@ CREATE TABLE `customer` (
 	`name`	varchar(20) NOT NULL,
 	`gender` char(1),
 	`age` int,
-	`nickname` varchar(20) NOT NULL,
+	`nickname` varchar(20),
 	`phone`	varchar(20)	NOT NULL,
 	`email`	varchar(30)
 );
