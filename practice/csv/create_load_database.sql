@@ -5,50 +5,50 @@ CREATE DATABASE cafe;
 USE cafe;
 
 
-CREATE TABLE `customer` (
-	`id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	`name`	varchar(20) NOT NULL,
-	`gender` char(1),
-	`age` int,
-	`nickname` varchar(20),
-	`phone`	varchar(20)	NOT NULL,
-	`email`	varchar(30)
+CREATE TABLE 'customer' (
+	'id' int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	'name'	varchar(20) NOT NULL,
+	'gender' char(1),
+	'age' int,
+	'nickname' varchar(20),
+	'phone'	varchar(20)	NOT NULL,
+	'email'	varchar(30)
 );
 
-CREATE TABLE `emp` (
-	`id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	`name`	varchar(20)	NOT NULL,
-	`start_date` date NOT NULL,
-	`salary` varchar(20) NOT NULL
+CREATE TABLE 'emp' (
+	'id' int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	'name'	varchar(20)	NOT NULL,
+	'start_date' date NOT NULL,
+	'salary' varchar(20) NOT NULL
 );
 
-CREATE TABLE `beverage` (
-	`id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	`name` varchar(30) NOT NULL UNIQUE,
-	`category` varchar(10) NOT NULL,
-	`price` int	NOT NULL,
-	`show_flag`	char(1)	NOT NULL	
+CREATE TABLE 'beverage' (
+	'id' int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	'name' varchar(30) NOT NULL UNIQUE,
+	'category' varchar(10) NOT NULL,
+	'price' int	NOT NULL,
+	'show_flag'	char(1)	NOT NULL	
 );
 
-CREATE TABLE `nutrition_info` (
-	`beverage_id` int NOT NULL,
-	`kcal` int,
-	`fat` int,
-	`natrium` int,
-	`sugar`	int,
-	`protein` int,
-	`caffein` int,
+CREATE TABLE 'nutrition_info' (
+	'beverage_id' int NOT NULL,
+	'kcal' int,
+	'fat' int,
+	'natrium' int,
+	'sugar'	int,
+	'protein' int,
+	'caffein' int,
 	CONSTRAINT fk_beverage_id2 FOREIGN KEY (beverage_id) REFERENCES beverage(id)
 );
 
-CREATE TABLE `order` (
-	`id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	`customer_id` int NOT NULL,
-	`date_ordered` datetime,
-	'total_price' int NOT NULL,
-	`beverage_id` int NOT NULL,
-	'beverage_cnt' int NOT NULL,
-	`emp_id` int NOT NULL,
+CREATE TABLE 'order' (
+	'id' int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	'customer_id' int NOT NULL,
+	'date_ordered' datetime,
+	'total_price'
+	'beverage_id' int NOT NULL,
+    'beverage_cnt' int NOT NULL,
+	'emp_id' int NOT NULL,
 	CONSTRAINT fk_customer_id FOREIGN KEY (customer_id) REFERENCES customer(id),
 	CONSTRAINT fk_beverage_id FOREIGN KEY (beverage_id) REFERENCES beverage(id),
 	CONSTRAINT fk_emp_id FOREIGN KEY (emp_id) REFERENCES emp(id)	
