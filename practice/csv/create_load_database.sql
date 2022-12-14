@@ -41,7 +41,7 @@ CREATE TABLE nutrition_info (
 	CONSTRAINT fk_beverage_id2 FOREIGN KEY (beverage_id) REFERENCES beverage(id)
 );
 
-CREATE TABLE order (
+CREATE TABLE ord (
 	id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	customer_id int NOT NULL,
 	date_ordered datetime,
