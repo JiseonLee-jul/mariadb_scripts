@@ -15,17 +15,6 @@ CREATE TABLE `customer` (
 	`email`	varchar(30)
 );
 
-CREATE TABLE `ord` (
-	`id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	`customer_id` int NOT NULL,
-	`date_ordered` datetime,
-	`beverage_id` int NOT NULL,
-	`emp_id` int NOT NULL,
-	CONSTRAINT fk_customer_id FOREIGN KEY (customer_id) REFERENCES customer(id),
-	CONSTRAINT fk_beverage_id FOREIGN KEY (beverage_id) REFERENCES beverage(id),
-	CONSTRAINT fk_emp_id FOREIGN KEY (emp_id) REFERENCES emp(id)	
-);
-
 CREATE TABLE `emp` (
 	`id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	`name`	varchar(20)	NOT NULL,
@@ -50,21 +39,23 @@ CREATE TABLE `nutrition_info` (
 	`sugar`	int,
 	`protein` int,
 	`caffein` int,
-	CONSTRAINT fk_beverage_id FOREIGN KEY (beverage_id) REFERENCES beverage(id)
+	CONSTRAINT fk_beverage_id2 FOREIGN KEY (beverage_id) REFERENCES beverage(id)
 );
 
+CREATE TABLE `ord` (
+	`id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	`customer_id` int NOT NULL,
+	`date_ordered` datetime,
+	`beverage_id` int NOT NULL,
+	`emp_id` int NOT NULL,
+	CONSTRAINT fk_customer_id FOREIGN KEY (customer_id) REFERENCES customer(id),
+	CONSTRAINT fk_beverage_id FOREIGN KEY (beverage_id) REFERENCES beverage(id),
+	CONSTRAINT fk_emp_id FOREIGN KEY (emp_id) REFERENCES emp(id)	
+);
 
 
 LOAD DATA LOCAL INFILE '/root/repo/mariadb_scripts/practice/csv/customer.csv'
 INTO TABLE customer
-CHARACTER SET utf8
-FIELDS TERMINATED BY ','
-ENCLOSED BY '"'
-LINES TERMINATED BY '\n'
-IGNORE 1 ROWS;
-
-LOAD DATA LOCAL INFILE '/root/repo/mariadb_scripts/practice/csv/ord.csv'
-INTO TABLE ord
 CHARACTER SET utf8
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
@@ -89,6 +80,14 @@ IGNORE 1 ROWS;
 
 LOAD DATA LOCAL INFILE '/root/repo/mariadb_scripts/practice/csv/nutrition_info.csv'
 INTO TABLE nutrition_info
+CHARACTER SET utf8
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
+
+LOAD DATA LOCAL INFILE '/root/repo/mariadb_scripts/practice/csv/ord.csv'
+INTO TABLE ord
 CHARACTER SET utf8
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
