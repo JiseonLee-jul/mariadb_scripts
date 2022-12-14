@@ -45,7 +45,7 @@ CREATE TABLE 'order' (
 	'id' int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	'customer_id' int NOT NULL,
 	'date_ordered' datetime,
-	'total_price'
+	'total_price' int NOT NULL, 
 	'beverage_id' int NOT NULL,
     'beverage_cnt' int NOT NULL,
 	'emp_id' int NOT NULL,
