@@ -5,7 +5,7 @@ CREATE DATABASE cafe;
 USE cafe;
 
 
-CREATE TABLE 'customer' (
+CREATE TABLE customer (
 	'id' int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	'name'	varchar(20) NOT NULL,
 	'gender' char(1),
@@ -15,14 +15,14 @@ CREATE TABLE 'customer' (
 	'email'	varchar(30)
 );
 
-CREATE TABLE 'emp' (
+CREATE TABLE emp (
 	'id' int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	'name'	varchar(20)	NOT NULL,
 	'start_date' date NOT NULL,
 	'salary' varchar(20) NOT NULL
 );
 
-CREATE TABLE 'beverage' (
+CREATE TABLE beverage (
 	'id' int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	'name' varchar(30) NOT NULL UNIQUE,
 	'category' varchar(10) NOT NULL,
@@ -30,7 +30,7 @@ CREATE TABLE 'beverage' (
 	'show_flag'	char(1)	NOT NULL	
 );
 
-CREATE TABLE 'nutrition_info' (
+CREATE TABLE nutrition_info (
 	'beverage_id' int NOT NULL,
 	'kcal' int,
 	'fat' int,
@@ -41,7 +41,7 @@ CREATE TABLE 'nutrition_info' (
 	CONSTRAINT fk_beverage_id2 FOREIGN KEY (beverage_id) REFERENCES beverage(id)
 );
 
-CREATE TABLE 'order' (
+CREATE TABLE order (
 	'id' int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	'customer_id' int NOT NULL,
 	'date_ordered' datetime,
