@@ -19,8 +19,7 @@ CREATE TABLE `emp` (
 	`id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	`name`	varchar(20)	NOT NULL,
 	`start_date` date NOT NULL,
-	`salary` varchar(20) NOT NULL,
-	`dept_id` varchar(20) NOT NULL
+	`salary` varchar(20) NOT NULL
 );
 
 CREATE TABLE `beverage` (
@@ -42,11 +41,13 @@ CREATE TABLE `nutrition_info` (
 	CONSTRAINT fk_beverage_id2 FOREIGN KEY (beverage_id) REFERENCES beverage(id)
 );
 
-CREATE TABLE `ord` (
+CREATE TABLE `order` (
 	`id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	`customer_id` int NOT NULL,
 	`date_ordered` datetime,
+	'total_price' int NOT NULL,
 	`beverage_id` int NOT NULL,
+	'beverage_cnt' int NOT NULL,
 	`emp_id` int NOT NULL,
 	CONSTRAINT fk_customer_id FOREIGN KEY (customer_id) REFERENCES customer(id),
 	CONSTRAINT fk_beverage_id FOREIGN KEY (beverage_id) REFERENCES beverage(id),
@@ -86,7 +87,7 @@ ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS;
 
-LOAD DATA LOCAL INFILE '/root/repo/mariadb_scripts/practice/csv/ord.csv'
+LOAD DATA LOCAL INFILE '/root/repo/mariadb_scripts/practice/csv/order.csv'
 INTO TABLE ord
 CHARACTER SET utf8
 FIELDS TERMINATED BY ','
