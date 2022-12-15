@@ -8,11 +8,11 @@ USE cafe;
 CREATE TABLE customer (
 	id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	name varchar(20) NOT NULL,
-	gender char(1),
+	gender char(1) DEFAULT NULL,
 	age int DEFAULT NULL,
-	nickname varchar(20),
+	nickname varchar(20) DEFAULT NULL,
 	phone varchar(20) NOT NULL,
-	email varchar(30)
+	email varchar(30) DEFAULT NULL
 );
 
 CREATE TABLE emp (
