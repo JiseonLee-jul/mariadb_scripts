@@ -4,10 +4,10 @@ desc beverage;
 
 -- a. INSERT INTO ... {VALUE/VALUES} ... 
 -- insert into에서 칼럼명 지정 안 할거면 값 다 넣어줘야
-insert into beverage value (21, 'StrawberryFrappuccino', 'Frappuccino', 7000, 'Y'); -- 모든 칼럼 다 선택
-insert into beverage values (22, 'MatchaFrappuccino', 'Frappuccino', 6500, 'Y');
-insert into beverage (name, category, price, show_flag) value ('FlatWhite', 'HotCoffees', 5000, 'Y');
-insert into beverage (category, name, show_flag, price) value ('HotTeas', 'GrapefruitHoneyBlackTea', 'Y', 5500);
+insert into beverage value (21, 'StrawberryFrappuccino', 'Frappuccino', 7000); -- 모든 칼럼 다 선택
+insert into beverage values (22, 'MatchaFrappuccino', 'Frappuccino', 6500);
+insert into beverage (name, category, price, show_flag) value ('FlatWhite', 'HotCoffees', 5000);
+insert into beverage (category, name, price) value ('HotTeas', 'GrapefruitHoneyBlackTea', 5500);
 
 
 -- b. INSERT INTO ... SET ...

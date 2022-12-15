@@ -8,7 +8,7 @@ USE cafe;
 CREATE TABLE customer (
 	id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	name varchar(20) NOT NULL,
-	gender char(1),
+	gender char(1) DEFAULT NULL,
 	age int,
 	nickname varchar(20),
 	phone varchar(20) NOT NULL,
