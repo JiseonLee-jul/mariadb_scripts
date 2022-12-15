@@ -25,7 +25,7 @@ CREATE TABLE emp (
 CREATE TABLE beverage (
 	id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	name varchar(30) NOT NULL UNIQUE,
-	category varchar(10) NOT NULL,
+	category varchar(20) NOT NULL,
 	price int	NOT NULL,
 	show_flag	char(1)	NOT NULL	
 );

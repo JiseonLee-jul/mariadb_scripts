@@ -9,8 +9,9 @@ insert into beverage values (22, 'MatchaFrappuccino', 'Frappuccino', 6500, 'Y');
 insert into beverage (name, category, price, show_flag) value ('FlatWhite', 'HotCoffees', 5000, 'Y');
 insert into beverage (category, name, show_flag, price) value ('HotTeas', 'GrapefruitHoneyBlackTea', 'Y', 5500);
 
+
 -- b. INSERT INTO ... SET ...
-insert into customer set name 
+insert into customer set name = 
 
 -- c.INSERT INTO ... SELECT ...
 create table test (
