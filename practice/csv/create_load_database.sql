@@ -9,7 +9,7 @@ CREATE TABLE customer (
 	id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	name varchar(20) NOT NULL,
 	gender char(1),
-	age int NULL,
+	age int DEFAULT NULL,
 	nickname varchar(20),
 	phone varchar(20) NOT NULL,
 	email varchar(30)
