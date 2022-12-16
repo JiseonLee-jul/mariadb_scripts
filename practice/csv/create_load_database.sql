@@ -44,13 +44,20 @@ CREATE TABLE ord (
 	id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	customer_id int NOT NULL,
 	date_ordered datetime,
+	total_cnt int NOT NULL,
 	total_price int NOT NULL, 
-	beverage_id int NOT NULL,
-    beverage_cnt int NOT NULL,
 	emp_id int NOT NULL,
 	CONSTRAINT fk_customer_id FOREIGN KEY (customer_id) REFERENCES customer(id),
-	CONSTRAINT fk_beverage_id FOREIGN KEY (beverage_id) REFERENCES beverage(id),
 	CONSTRAINT fk_emp_id FOREIGN KEY (emp_id) REFERENCES emp(id)	
+);
+
+CREATE TABLE cart (
+	ord_id int NOT NULL,
+	beverage_id int NOT NULL,
+	beverage_cnt int NOT NULL, 
+	beverage_price int NOT NULL,
+	CONSTRAINT fk_ord_id FOREIGN KEY (ord_id) REFERENCES ord(id),
+	CONSTRAINT fk_beverage_id FOREIGN KEY (beverage_id) REFERENCES beverage(id)	
 );
 
 
@@ -86,8 +93,16 @@ ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS;
 
-LOAD DATA LOCAL INFILE '/root/repo/mariadb_scripts/practice/csv/order.csv'
+LOAD DATA LOCAL INFILE '/root/repo/mariadb_scripts/practice/csv/ord.csv'
 INTO TABLE ord
+CHARACTER SET utf8
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
+
+LOAD DATA LOCAL INFILE '/root/repo/mariadb_scripts/practice/csv/cart.csv'
+INTO TABLE cart
 CHARACTER SET utf8
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
