@@ -4,61 +4,49 @@ CREATE DATABASE cafe;
 
 USE cafe;
 
-
-CREATE TABLE customer (
-	id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	name varchar(20) NOT NULL,
-	gender char(1),
-	age int,
-	nickname varchar(20),
-	phone varchar(20) NOT NULL,
-	email varchar(30)
+CREATE TABLE `customer` (
+	`id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	`name` varchar(20) NOT NULL,
+	`gender` char(1) NULL,
+	`age` int NULL,
+	`nickname` int NULL,
+	`phone` char(13) NOT NULL,
+	`email` varchar(50) NULL
 );
 
-CREATE TABLE emp (
-	id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	name varchar(20) NOT NULL,
-	start_date date NOT NULL,
-	salary varchar(20) NOT NULL
-);
-
-CREATE TABLE beverage (
-	id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	name varchar(30) NOT NULL UNIQUE,
-	category varchar(20) NOT NULL,
-	price int NOT NULL	
-);
-
-CREATE TABLE nutrition_info (
-	beverage_id int NOT NULL,
-	kcal int,
-	fat int,
-	natrium int,
-	sugar	int,
-	protein int,
-	caffein int,
-	CONSTRAINT fk_beverage_id2 FOREIGN KEY (beverage_id) REFERENCES beverage(id)
-);
-
-CREATE TABLE ord (
-	id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	customer_id int NOT NULL,
-	date_ordered datetime,
-	total_cnt int NOT NULL,
-	total_price int NOT NULL, 
-	emp_id int NOT NULL,
+CREATE TABLE `orders` (
+	`id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	`customer_id` int NOT NULL,
+	`date_ordered` datetime NULL,
+	`total_cnt` int NULL,
+	`total_price` int NULL,
+	`emp_id` int NOT NULL,
 	CONSTRAINT fk_customer_id FOREIGN KEY (customer_id) REFERENCES customer(id),
-	CONSTRAINT fk_emp_id FOREIGN KEY (emp_id) REFERENCES emp(id)	
+	CONSTRAINT fk_emp_id FOREIGN KEY (emp_id) REFERENCES emp(id)
 );
 
-CREATE TABLE cart (
-	ord_id int NOT NULL,
-	beverage_id int NOT NULL,
-	beverage_cnt int NOT NULL, 
-	beverage_price int NOT NULL,
-	CONSTRAINT fk_ord_id FOREIGN KEY (ord_id) REFERENCES ord(id),
+CREATE TABLE `emp` (
+	`id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	`name` varchar(20) NULL,
+	`start_date` date NULL,
+	`salary` int NULL
+);
+
+CREATE TABLE `beverage` (
+	`id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	`name` varchar(30) NULL,
+	`category` varchar(20) NULL,
+	`price` int NULL
+);
+
+CREATE TABLE `orderdetails` (
+	`order_id` int NOT NULL,
+	`beverage_id` int NOT NULL,
+	`beverage_cnt` int NULL,
+	CONSTRAINT fk_orders_id FOREIGN KEY (orders_id) REFERENCES orders(id),
 	CONSTRAINT fk_beverage_id FOREIGN KEY (beverage_id) REFERENCES beverage(id)	
 );
+
 
 
 LOAD DATA LOCAL INFILE '/root/repo/mariadb_scripts/practice/csv/customer.csv'
@@ -85,15 +73,7 @@ ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS;
 
-LOAD DATA LOCAL INFILE '/root/repo/mariadb_scripts/practice/csv/nutrition_info.csv'
-INTO TABLE nutrition_info
-CHARACTER SET utf8
-FIELDS TERMINATED BY ','
-ENCLOSED BY '"'
-LINES TERMINATED BY '\n'
-IGNORE 1 ROWS;
-
-LOAD DATA LOCAL INFILE '/root/repo/mariadb_scripts/practice/csv/ord.csv'
+LOAD DATA LOCAL INFILE '/root/repo/mariadb_scripts/practice/csv/orders.csv'
 INTO TABLE ord
 CHARACTER SET utf8
 FIELDS TERMINATED BY ','
@@ -101,7 +81,7 @@ ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS;
 
-LOAD DATA LOCAL INFILE '/root/repo/mariadb_scripts/practice/csv/cart.csv'
+LOAD DATA LOCAL INFILE '/root/repo/mariadb_scripts/practice/csv/orderdetails.csv'
 INTO TABLE cart
 CHARACTER SET utf8
 FIELDS TERMINATED BY ','
