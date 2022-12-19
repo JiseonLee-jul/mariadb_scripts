@@ -40,7 +40,7 @@ CREATE TABLE `orders` (
 );
 
 CREATE TABLE `orderdetails` (
-	`order_id` int NOT NULL,
+	`orders_id` int NOT NULL,
 	`beverage_id` int NOT NULL,
 	`beverage_cnt` int NULL,
 	CONSTRAINT fk_orders_id FOREIGN KEY (orders_id) REFERENCES orders(id),
