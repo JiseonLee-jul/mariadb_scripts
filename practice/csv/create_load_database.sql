@@ -14,17 +14,6 @@ CREATE TABLE `customer` (
 	`email` varchar(50) NULL
 );
 
-CREATE TABLE `orders` (
-	`id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	`customer_id` int NOT NULL,
-	`date_ordered` datetime NULL,
-	`total_cnt` int NULL,
-	`total_price` int NULL,
-	`emp_id` int NOT NULL,
-	CONSTRAINT fk_customer_id FOREIGN KEY (customer_id) REFERENCES customer(id),
-	CONSTRAINT fk_emp_id FOREIGN KEY (emp_id) REFERENCES emp(id)
-);
-
 CREATE TABLE `emp` (
 	`id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	`name` varchar(20) NULL,
@@ -37,6 +26,17 @@ CREATE TABLE `beverage` (
 	`name` varchar(30) NULL,
 	`category` varchar(20) NULL,
 	`price` int NULL
+);
+
+CREATE TABLE `orders` (
+	`id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	`customer_id` int NOT NULL,
+	`date_ordered` datetime NULL,
+	`total_cnt` int NULL,
+	`total_price` int NULL,
+	`emp_id` int NOT NULL,
+	CONSTRAINT fk_customer_id FOREIGN KEY (customer_id) REFERENCES customer(id),
+	CONSTRAINT fk_emp_id FOREIGN KEY (emp_id) REFERENCES emp(id)
 );
 
 CREATE TABLE `orderdetails` (
