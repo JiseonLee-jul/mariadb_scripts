@@ -74,7 +74,7 @@ LINES TERMINATED BY '\n'
 IGNORE 1 ROWS;
 
 LOAD DATA LOCAL INFILE '/root/repo/mariadb_scripts/practice/csv/orders.csv'
-INTO TABLE ord
+INTO TABLE orders
 CHARACTER SET utf8
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
@@ -82,7 +82,7 @@ LINES TERMINATED BY '\n'
 IGNORE 1 ROWS;
 
 LOAD DATA LOCAL INFILE '/root/repo/mariadb_scripts/practice/csv/orderdetails.csv'
-INTO TABLE cart
+INTO TABLE orderdetails
 CHARACTER SET utf8
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
