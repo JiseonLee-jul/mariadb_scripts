@@ -35,37 +35,43 @@ DROP USER 'user2'@'localhost'; -- 에러
 ------------- 2. Privilege -------------
 -- a. 권한 확인하기
 SHOW GRANTS FOR 'user1'@'localhost';
+SHOW GRANTS;
 SELECT * FROM mysql.user WHERE user = 'user1'\G;
 SELECT * FROM information_schema.user_privileges WHERE GRANTEE = "'user1'@'localhost'"\G -- USAGE
-SELECT * FROM information_schema.schema_privileges WHERE GRANTEE = "'user1'@'localhost'"\G
-SELECT * FROM information_schema.table_privileges WHERE GRANTEE = "'user1'@'localhost'"\G
-SELECT * FROM information_schema.column_privileges WHERE GRANTEE = "'user1'@'localhost'"\G
 
 
 -- b. 권한 부여하기
-GRANT ALL PRIVILEGES ON *.* TO 'user2'@'localhost' IDENTIFIED BY '2222';
 -- [user1 user로 접속] : mariadb -u user1 -h localhost -p
 SHOW DATBASES; 
-CREATE DATABASE user_test; --에러
+CREATE DATABASE user_db; --에러
+CREATE USER 'user2'@'localhost' IDENTIFIED BY '2222'; --에러
+
 -- [root user로 접속] : mariadb -u root -h localhost -p
-GRANT show databases ON *.* TO 'user1'@'localhost';
-GRANT create ON *.* TO 'user1'@'localhost';
+GRANT show databases, create ON *.* TO 'user1'@'localhost';
+GRANT create user, reload ON *.* TO 'user1'@'localhost' with grant option;
+GRANT select, insert, update, delete ON user_db.* TO 'user1'@'localhost';
+GRANT select ON mysql.* TO 'user1'@'localhost';
 SHOW GRANTS FOR 'user1'@'localhost';
 -- [user1 user로 접속] : mariadb -u user1 -h localhost -p
-SHOW DATBASES; 
+SHOW DATABASES; 
 CREATE DATABASE user_db;
 USE user_db;
 CREATE TABLE user_table(col1 int, col2 int);
+SHOW TABLES;
 
-SELECT * FROM user_table; -- 에러
-INSERT INTO user_table VALUE (1, 2); -- 에러
+DESC user_table;
+INSERT INTO user_table VALUE (1, 2);
+SELECT * FROM user_table;
 
--- [root user로 접속] : mariadb -u root -h localhost -p
-GRANT create user, select, insert ON *.* TO 'user1'@'localhost';
-GRANT select, insert ON user_db.* TO 'user1'@'localhost';
--- [user1 user로 접속] : mariadb -u user1 -h localhost -p
+USE cafe;
+SELECT * FROM beverage; --에러
+INSERT INTO employee(name, start_date, salary) VALUE ('Jason', '2022-12-25', 350);
 
-
+-- user2 생성
+GRANT select, insert, update, delete ON user_db.* TO 'user2'@'localhost' IDENTIFIED BY '2222';
+SELECT user, host from mysql.user WHERE user='user2';
+SHOW GRANTS FOR 'user2'@'localhost';
+GRANT SUPER ON *.* TO 'user2'@'localhost';
 FLUSH PRIVILEGES;
 SELECT * FROM information_schema.user_privileges WHERE GRANTEE = "'user1'@'localhost'"\G -- USAGE
 
