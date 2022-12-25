@@ -5,9 +5,9 @@ desc beverage;
 ---- a. INSERT INTO ... {VALUE/VALUES} ... 
 -- INSERT INTO에서 칼럼명 지정 안 할거면 값 다 넣어줘야
 INSERT INTO beverage VALUE (21, 'StrawberryFrappuccino', 'Frappuccino', 7000); 
-INSERT INTO beverage (name, category, price)
-    VALUE ('AlmondChocolateMilk', 'ColdDrinks', 4000),
-          ('AppleJuice', 'ColdDrinks', 5000);
+INSERT INTO beverage
+    VALUE (22, 'AlmondChocolateMilk', 'ColdDrinks', 4000),
+          (23, 'AppleJuice', 'ColdDrinks', 5000);
 
 INSERT INTO beverage VALUE ('FlatWhite', 'HotCoffees', 5000); -- 에러
 INSERT INTO beverage (name, category, price) VALUE ('FlatWhite', 'HotCoffees', 5000);
