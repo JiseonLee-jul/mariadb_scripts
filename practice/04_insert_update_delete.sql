@@ -13,6 +13,8 @@ INSERT INTO beverage VALUE ('FlatWhite', 'HotCoffees', 5000); -- 에러
 INSERT INTO beverage (name, category, price) VALUE ('FlatWhite', 'HotCoffees', 5000);
 INSERT INTO beverage (category, name, price) VALUE ('HotTeas', 'GrapefruitHoneyBlackTea', 5500);
 
+INSERT INTO beverage (name, category, price) VALUE ('YujaTea', 'HotTeas', NULL);
+INSERT INTO beverage (name, category) VALUE ('CaffeMocha', 'HotCoffees');
 
 ---- b. INSERT INTO ... SELECT ...
 CREATE TABLE test (
@@ -37,10 +39,6 @@ INSERT INTO beverage (name, category, price) VALUE ('EnglishBreakfastTea', 'HotT
     RETURNING concat_ws('_', category, name),  price, price*2;
 INSERT INTO beverage (name, category, price) VALUE ('MatchaLatte', 'HotDrinks', 5000) 
     RETURNING count(*); -- 에러
-
-
----- e. LOAD DATA
-
 
 
 ---------- 2. UPDATE : 데이터 수정하기 -----------

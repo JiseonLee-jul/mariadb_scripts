@@ -69,11 +69,37 @@ INSERT INTO employee(name, start_date, salary) VALUE ('Jason', '2022-12-25', 350
 
 -- user2 생성
 GRANT select, insert, update, delete ON user_db.* TO 'user2'@'localhost' IDENTIFIED BY '2222';
-SELECT user, host from mysql.user WHERE user='user2';
+-- SELECT user, host from mysql.user WHERE user='user2';
 SHOW GRANTS FOR 'user2'@'localhost';
-GRANT SUPER ON *.* TO 'user2'@'localhost';
-FLUSH PRIVILEGES;
-SELECT * FROM information_schema.user_privileges WHERE GRANTEE = "'user1'@'localhost'"\G -- USAGE
+GRANT SUPER ON *.* TO 'user2'@'localhost'; --에러
+
+-- c. 권한 회수하기
+REVOKE SELECT ON user_db.* FROM 'user2'@'localhost';
+SHOW GRANTS FOR 'user2'@'localhost';
+-- [user2 user로 접속] : mariadb -u user2 -h localhost -p
+USE user_db;
+SELECT * FROM user_table;
+
+REVOKE ALL PRIVILEGES, GRANT OPTION FROM 'user1'@'localhost', 'user2'@'localhost';
+SHOW GRANTS FOR 'user1'@'localhost';
+SHOW GRANTS FOR 'user2'@'localhost';
 
 
+------------- 3. ROLE -------------
+-- a. 롤 생성하기
+CREATE ROLE dev_select;
+GRANT SELECT ON *.* TO dev_select;
+SELECT user, host, is_role from mysql.user WHERE is_role = 'Y';
 
+--b. 롤 부여하기
+GRANT dev_select TO 'user1'@'localhost';
+SHOW GRANTS FOR 'user1'@'localhost';
+
+SELECT CURRENT_ROLE();
+SET ROLE dev_select;
+SET ROLE none;
+SELECT CURRENT_ROLE();
+
+--c. 롤 제거하기
+DROP ROLE dev_select;
+SELECT user, host, is_role from mysql.user WHERE is_role = 'Y';
