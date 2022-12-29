@@ -1,6 +1,7 @@
 ---------- 1. INSERT : 데이터 추가하기 -----------
-use cafe;
-desc beverage;
+USE cafe;
+DESC beverage;
+SELECT * FROM beverage;
 
 ---- a. INSERT INTO ... {VALUE/VALUES} ... 
 -- INSERT INTO에서 칼럼명 지정 안 할거면 값 다 넣어줘야
@@ -46,45 +47,29 @@ INSERT INTO beverage (name, category, price) VALUE ('MatchaLatte', 'HotDrinks', 
 SELECT * FROM beverage WHERE name = 'PinkDrink';
 UPDATE beverage SET price = 4000 WHERE name = 'PinkDrink';
 
-SELECT * FROM beverage WHERE price=(SELECT min(price) FROM beverage);
+SELECT * FROM beverage WHERE price = 7500;
+UPDATE beverage SET price = 8000 WHERE price = 7500;
+
+SELECT * FROM beverage WHERE price = (SELECT min(price) FROM beverage);
 UPDATE beverage SET price = price + 500 WHERE (SELECT min(price) FROM beverage);
 SELECT * FROM beverage WHERE name = 'Espresso';
 
 -- where 조건 사용 주의
 UPDATE test SET beverage_cnt=20;
 
----- b. multiple table syntax
-CREATE TABLE test2 (
-    emp_no int,
-    emp_class varchar(5)
-);
-INSERT INTO test2 
-    VALUES (1, 'A'),
-           (2, 'B'),
-           (3, 'C');
 
-CREATE TABLE test3 (
-    emp_no int,
-    emp_name varchar(5)
-);
-INSERT INTO test3 
-    VALUES (1, 'aa'),
-           (2, 'bb'),
-           (4, 'dd');
-
-UPDATE test2, test3 SET test2.emp_class = 'Z', test3.emp_name = 'zz' WHERE test2.emp_no = test3.emp_no;
-UPDATE test2, test3 SET test2.emp_class=test3.emp_name WHERE test2.emp_no = test3.emp_no;
 
 
 ---------- 3. DELETE : 데이터 수정하기 -----------
 ---- a. single table syntax
 SELECT * FROM beverage;
 DELETE FROM beverage WHERE name = 'EnglishBreakfastTea';
+DELETE FROM beverage WHERE prcie = 5000 RETURNING *; 
+
 
 SELECT count(*) FROM beverage;
 DELETE FROM beverage WHERE name IN (SELECT name FROM beverage where id > 20);
 SELECT count(*) FROM beverage;
 
----- b. multiple table syntax
-DELETE t2, t3 FROM test2 t2, test3 t3 WHERE t2.emp_no=t3.emp_no;
-
+-- where 조건 사용 주의
+DELETE FROM test;
