@@ -22,11 +22,15 @@ CREATE TABLE test (
     beverage_id int,
     beverage_cnt int
 );
-
 INSERT INTO test 
     SELECT beverage_id, count(*) 
     FROM orderdetails
     GROUP BY beverage_id;
+
+
+CREATE TABLE beverage2 LIKE beverage;
+INSERT INTO beverage2
+    SELECT * FROM beverage;
 
 
 ---- c. INSERT INTO ... SET ...
@@ -38,8 +42,29 @@ INSERT INTO beverage (name, category, price) VALUE ('Espresso', 'HotCoffees', 30
     RETURNING *;
 INSERT INTO beverage (name, category, price) VALUE ('EnglishBreakfastTea', 'HotTeas', 5000) 
     RETURNING concat_ws('_', category, name),  price, price*2;
-INSERT INTO beverage (name, category, price) VALUE ('MatchaLatte', 'HotDrinks', 5000) 
+INSERT INTO beverage (name, category, price) VALUE ('MatchaLatte', 'HotDrinks', 6000) 
     RETURNING count(*); -- 에러
+
+
+---- d INSERT 옵션 : IGNORE
+INSERT INTO beverage 
+    VALUE (30, 'MatchaLatte', 'HotDrinks', 6000),
+          (31, 'JavaChipFrappuccino', 'Frappuccino', 6500),
+          (31, 'DolceLatte', 'HotCoffees', 6500);
+
+INSERT IGNORE INTO beverage 
+    VALUE (30, 'MatchaLatte', 'HotDrinks', 6000),
+          (31, 'JavaChipFrappuccino', 'Frappuccino', 6500),
+          (31, 'DolceLatte', 'HotCoffees', 6500);
+
+SHOW WARNINGS;
+
+
+INSERT INTO customer(name, phone)
+    VALUE ('Ellie', NULL);
+
+INSERT IGNORE INTO customer(name, phone)
+    VALUE ('Ellie', NULL);
 
 
 ---------- 2. UPDATE : 데이터 수정하기 -----------
@@ -56,8 +81,6 @@ SELECT * FROM beverage WHERE name = 'Espresso';
 
 -- where 조건 사용 주의
 UPDATE test SET beverage_cnt=20;
-
-
 
 
 ---------- 3. DELETE : 데이터 수정하기 -----------
