@@ -48,9 +48,6 @@ CREATE USER 'user2'@'localhost' IDENTIFIED BY '2222'; --에러
 
 -- [root user로 접속] : mariadb -u root -h localhost -p
 GRANT show databases, create ON *.* TO 'user1'@'localhost';
-GRANT create user, reload ON *.* TO 'user1'@'localhost' with grant option;
-GRANT select, insert, update, delete ON user_db.* TO 'user1'@'localhost';
-GRANT select ON mysql.* TO 'user1'@'localhost';
 SHOW GRANTS FOR 'user1'@'localhost';
 -- [user1 user로 접속] : mariadb -u user1 -h localhost -p
 SHOW DATABASES; 
@@ -59,13 +56,24 @@ USE user_db;
 CREATE TABLE user_table(col1 int, col2 int);
 SHOW TABLES;
 
-DESC user_table;
+DESC user_table; -- 에러
+INSERT INTO user_table VALUE (1, 2); -- 에러
+SHOW GRANTS FOR 'user2'@'localhost'; -- 에러
+CREATE USER 'user2'@'localhost' IDENTIFIED BY '2222'; -- 에러
+
+-- [root user로 접속] : mariadb -u root -h localhost -p
+GRANT create user, reload ON *.* TO 'user1'@'localhost' with grant option;
+GRANT select ON mysql.* TO 'user1'@'localhost';
+GRANT select, insert, update, delete ON user_db.* TO 'user1'@'localhost';
+
+-- [user1 user로 접속] : mariadb -u user1 -h localhost -p
+USE user_db;
 INSERT INTO user_table VALUE (1, 2);
 SELECT * FROM user_table;
 
 USE cafe;
 SELECT * FROM beverage; --에러
-INSERT INTO employee(name, start_date, salary) VALUE ('Jason', '2022-12-25', 350);
+INSERT INTO employee(name, start_date, salary) VALUE ('Jason', '2022-12-25', 350); -- 에러
 
 -- user2 생성
 GRANT select, insert, update, delete ON user_db.* TO 'user2'@'localhost' IDENTIFIED BY '2222';
@@ -86,10 +94,12 @@ SHOW GRANTS FOR 'user2'@'localhost';
 
 
 ------------- 3. ROLE -------------
+-- 롤 정보 확인하기
+SELECT * FROM
 -- a. 롤 생성하기
 CREATE ROLE dev_select;
 GRANT SELECT ON *.* TO dev_select;
-SELECT user, host, is_role from mysql.user WHERE is_role = 'Y';
+SELECT user, host, is_role FROM mysql.user WHERE is_role = 'Y';
 
 --b. 롤 부여하기
 GRANT dev_select TO 'user1'@'localhost';
