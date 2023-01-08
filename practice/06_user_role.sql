@@ -86,30 +86,90 @@ REVOKE SELECT ON user_db.* FROM 'user2'@'localhost';
 SHOW GRANTS FOR 'user2'@'localhost';
 -- [user2 user로 접속] : mariadb -u user2 -h localhost -p
 USE user_db;
-SELECT * FROM user_table;
+SELECT * FROM user_table; -- 에러
 
+-- [user1 user로 접속] : mariadb -u user1 -h localhost -p
 REVOKE ALL PRIVILEGES, GRANT OPTION FROM 'user1'@'localhost', 'user2'@'localhost';
+-- [root user로 접속] : mariadb -u root -h localhost -p
 SHOW GRANTS FOR 'user1'@'localhost';
 SHOW GRANTS FOR 'user2'@'localhost';
 
-
 ------------- 3. ROLE -------------
 -- 롤 정보 확인하기
-SELECT * FROM
+SELECT * FROM mysql.user;
+
 -- a. 롤 생성하기
 CREATE ROLE dev_select;
 GRANT SELECT ON *.* TO dev_select;
 SELECT user, host, is_role FROM mysql.user WHERE is_role = 'Y';
 
---b. 롤 부여하기
+--b. 롤 부여/활성화
 GRANT dev_select TO 'user1'@'localhost';
 SHOW GRANTS FOR 'user1'@'localhost';
 
+-- [user1 user로 접속] : mariadb -u user1 -h localhost -p
 SELECT CURRENT_ROLE();
 SET ROLE dev_select;
 SET ROLE none;
+-- [root user로 접속] : mariadb -u root -h localhost -p
+SET DEFAULT ROLE dev_select FOR 'user1'@'localhost'; 
+SELECT user, host, is_role, default_role FROM mysql.user;
+-- [user1 user로 접속] : mariadb -u user1 -h localhost -p
 SELECT CURRENT_ROLE();
+
+SET DEFAULT ROLE NONE;
+
 
 --c. 롤 제거하기
 DROP ROLE dev_select;
 SELECT user, host, is_role from mysql.user WHERE is_role = 'Y';
+
+
+
+------------- 4. 활용 -------------
+-- [root user로 접속] : mariadb -u root -p
+CREATE USER 'mgt'@'localhost' IDENTIFIED BY 'mgt';
+CREATE USER 'sales'@'localhost' IDENTIFIED BY 'sales';
+
+GRANT ALL PRIVILEGES ON cafe.* TO 'mgt'@'localhost';
+GRANT ALL PRIVILEGES ON cafe.orders TO 'sales'@'localhost';
+GRANT ALL PRIVILEGES ON cafe.orderdetails TO 'sales'@'localhost';
+
+-- [mgt user로 접속] : mariadb -u mgt -p"mgt";
+SHOW DATABASES;
+USE cafe;
+CREATE TABLE dept (id int, name varchar(20));
+INSERT INTO dept value (1, 'Management');
+SELECT * FROM dept;
+
+-- [sales user로 접속] : mariadb -u sales -p"sales";
+SHOW DATABASES;
+USE cafe;
+SHOW TABLES;
+SELECT * FROM dept; --에러 
+
+-- [root user로 접속] : mariadb -u root -p
+CREATE ROLE developer;
+GRANT SELECT, INSERT, UPDATE, DELETE ON cafe.* TO developer;
+
+CREATE USER 'dev1'@'localhost' IDENTIFIED BY 'dev1';
+CREATE USER 'dev2'@'localhost' IDENTIFIED BY 'dev2';
+GRANT developer TO 'dev1'@'localhost';
+GRANT developer TO 'dev2'@'localhost';
+
+-- [dev1 user로 접속] : mariadb -u dev1 -p"dev1";
+SHOW DATABASES;
+SELECT CURRENT_ROLE;
+
+SET ROLE developer;
+SELECT CURRENT_ROLE;
+SHOW DATABASES;
+
+USE cafe;
+SHOW TABLES;
+SELECT * FROM dept;
+
+
+---- 참조
+SELECT * FROM information_schema.APPLICABLE_ROLES;
+SELECT * FROM mysql.roles_mapping;
