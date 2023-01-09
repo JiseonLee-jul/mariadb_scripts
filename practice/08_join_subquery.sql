@@ -8,18 +8,39 @@ SELECT * FROM t1;
 SELECT * FROM t2;
 
 
--- a. INNER JOIN
+---- a. 종류
+--INNER JOIN
 SELECT * FROM t1 INNER JOIN t2 ON t1.col1 = t2.col1;
 SELECT * FROM t1, t2 WHERE t1.col1 = t2.col1;
 
--- b. LEFT JOIN
+-- LEFT JOIN
 SELECT * FROM t1 LEFT JOIN t2 ON t1.col1 = t2.col1;
 
--- c. RIGHT JOIN
+-- RIGHT JOIN
 SELECT * FROM t1 RIGHT JOIN t2 ON t1.col1 = t2.col1;
 SELECT * FROM t2 LEFT JOIN t1 ON t2.col1 = t1.col1;
 
+-- FULL OUTER JOIN
+SELECT * FROM t1 LEFT JOIN t2 ON t1.col1 = t2.col1
+UNION
+SELECT * FROM t1 RIGHT JOIN t2 ON t1.col1 = t2.col1;
+
+-- CROSS JOIN
 SELECT * FROM t1 CROSS JOIN t2;
+SELECT * FROM t1, t2;
+
+
+---- b. 활용
+SELECT b.category as beverage_category, count(*) as cnt
+    FROM orderdetails o 
+    INNER JOIN beverage b ON o.beverage_id = b.id
+    GROUP BY b.category
+    ORDER BY 2 DESC;
+
+SELECT *
+    FROM emp e
+    INNER JOIN orders o ON e.id = o.emp_id;
+
 
 --SELECT * FROM orders;
 --SELECT * FROM customer;
