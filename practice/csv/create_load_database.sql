@@ -36,7 +36,7 @@ CREATE TABLE `orders` (
 	`total_price` int NULL,
 	`emp_id` int NOT NULL,
 	CONSTRAINT fk_customer_id FOREIGN KEY (customer_id) REFERENCES customer(id),
-	CONSTRAINT fk_emp_id FOREIGN KEY (emp_id) REFERENCES emp(id)
+	CONSTRAINT fk_emp_id FOREIGN KEY (emp_id) REFERENCES employee(id)
 );
 
 CREATE TABLE `orderdetails` (
