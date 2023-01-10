@@ -19,6 +19,10 @@
 -- Table structure for table `beverage`
 --
 
+DROP DATABASE IF EXISTS cafe;
+CREATE DATABASE cafe;
+USE cafe;
+
 DROP TABLE IF EXISTS `beverage`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;

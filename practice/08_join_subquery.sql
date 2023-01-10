@@ -37,35 +37,15 @@ SELECT b.category as beverage_category, count(*) as cnt
     GROUP BY b.category
     ORDER BY 2 DESC;
 
-SELECT *
+SELECT e.name, e.salary * 12 as salary_year, sum(total_cnt) as sum_cnt, sum(total_price) as sum_price
     FROM emp e
-    INNER JOIN orders o ON e.id = o.emp_id;
+    INNER JOIN orders o ON e.id = o.emp_id
+    WHERE o.date_ordered LIKE '2022-12-08%'
+    GROUP BY e.name
+    ORDER BY 4 DESC, 3 DESC
+    LIMIT 5;
 
 
---SELECT * FROM orders;
---SELECT * FROM customer;
-SELECT c.id, o.customer_id, c.name, c.age 
-    FROM customer c INNER JOIN orders o ON c.id=o.customer_id;
-
-SELECT c.id, o.customer_id, c.name, c.age 
-    FROM customer c, orders o WHERE c.id=o.customer_id;
-
----- b. LEFT JOIN
-SELECT c.id, o.customer_id, c.name, c.age
-    FROM customer c LEFT JOIN orders o ON c.id=o.customer_id;
-
----- c. RIGHT JOIN 
-SELECT c.id, o.customer_id, c.name, c.age 
-    FROM customer c RIGHT JOIN orders o ON c.id=o.customer_id;
-
----- d. FULL OUTER JOIN
-SELECT c.id, o.customer_id, c.name, c.age
-    FROM customer c LEFT JOIN orders o ON c.id=o.customer_id
-    UNION 
-    SELECT c.id, o.customer_id, c.name, c.age
-    FROM customer c RIGHT JOIN orders o ON c.id=o.customer_id;
-
----- e. CROSS JOIN
 SELECT * FROM emp;
 CREATE TABLE copy_dual2(
     col1 INT,

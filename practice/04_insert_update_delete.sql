@@ -22,8 +22,9 @@ CREATE TABLE test (
     beverage_id int,
     beverage_cnt int
 );
+
 INSERT INTO test 
-    SELECT beverage_id, count(*) 
+    SELECT beverage_id, sum(beverage_cnt) 
     FROM orderdetails
     GROUP BY beverage_id;
 
@@ -76,7 +77,7 @@ SELECT * FROM beverage WHERE price = 7500;
 UPDATE beverage SET price = 8000 WHERE price = 7500;
 
 SELECT * FROM beverage WHERE price = (SELECT min(price) FROM beverage);
-UPDATE beverage SET price = price + 500 WHERE (SELECT min(price) FROM beverage);
+UPDATE beverage SET price = price + 500 WHERE price = (SELECT min(price) FROM beverage);
 SELECT * FROM beverage WHERE name = 'Espresso';
 
 -- where 조건 사용 주의
@@ -87,8 +88,7 @@ UPDATE test SET beverage_cnt=20;
 ---- a. single table syntax
 SELECT * FROM beverage;
 DELETE FROM beverage WHERE name = 'EnglishBreakfastTea';
-DELETE FROM beverage WHERE prcie = 5000 RETURNING *; 
-
+DELETE FROM beverage WHERE price = 5000 RETURNING *; 
 
 SELECT count(*) FROM beverage;
 DELETE FROM beverage WHERE name IN (SELECT name FROM beverage where id > 20);
