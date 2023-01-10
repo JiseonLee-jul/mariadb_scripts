@@ -14,7 +14,7 @@ CREATE TABLE `customer` (
 	`email` varchar(50) NULL
 );
 
-CREATE TABLE `emp` (
+CREATE TABLE `employee` (
 	`id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	`name` varchar(20) NULL,
 	`start_date` date NULL,
@@ -57,8 +57,8 @@ ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS;
 
-LOAD DATA LOCAL INFILE '/root/repo/mariadb_scripts/practice/csv/emp.csv'
-INTO TABLE emp
+LOAD DATA LOCAL INFILE '/root/repo/mariadb_scripts/practice/csv/employee.csv'
+INTO TABLE employee
 CHARACTER SET utf8
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
