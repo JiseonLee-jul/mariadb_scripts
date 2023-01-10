@@ -232,13 +232,13 @@ INSERT INTO `customer` VALUES
 UNLOCK TABLES;
 
 --
--- Table structure for table `emp`
+-- Table structure for table `employee`
 --
 
-DROP TABLE IF EXISTS `emp`;
+DROP TABLE IF EXISTS `employee`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `emp` (
+CREATE TABLE `employee` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(20) DEFAULT NULL,
   `start_date` date DEFAULT NULL,
@@ -248,28 +248,28 @@ CREATE TABLE `emp` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `emp`
+-- Dumping data for table `employee`
 --
 
-LOCK TABLES `emp` WRITE;
-/*!40000 ALTER TABLE `emp` DISABLE KEYS */;
-INSERT INTO `emp` VALUES
-(1,'Ashli','2013-08-10',354),
-(2,'Nicolas','2016-08-24',260),
-(3,'Orly','2019-03-27',338),
-(4,'Star','2021-08-21',383),
-(5,'Bernardine','2013-07-21',384),
-(6,'Kirsti','2019-11-27',375),
-(7,'Blithe','2013-01-24',214),
-(8,'Osmond','2012-01-22',367),
-(9,'Lazarus','2011-11-26',253),
-(10,'Eachelle','2014-03-26',390),
-(11,'Teirtza','2021-07-17',373),
-(12,'Vidovik','2013-07-22',446),
-(13,'Eleanor','2011-07-21',302),
-(14,'Zandra','2011-09-16',354),
-(15,'Miquela','2019-11-28',285);
-/*!40000 ALTER TABLE `emp` ENABLE KEYS */;
+LOCK TABLES `employee` WRITE;
+/*!40000 ALTER TABLE `employee` DISABLE KEYS */;
+INSERT INTO `employee` VALUES
+(1,'Ashli','2013-08-10',3540000),
+(2,'Nicolas','2016-08-24',2600000),
+(3,'Orly','2019-03-27',3380000),
+(4,'Star','2021-08-21',3830000),
+(5,'Bernardine','2013-07-21',3840000),
+(6,'Kirsti','2019-11-27',3750000),
+(7,'Blithe','2013-01-24',2140000),
+(8,'Osmond','2012-01-22',3670000),
+(9,'Lazarus','2011-11-26',2530000),
+(10,'Eachelle','2014-03-26',3900000),
+(11,'Teirtza','2021-07-17',3730000),
+(12,'Vidovik','2013-07-22',4460000),
+(13,'Eleanor','2011-07-21',3020000),
+(14,'Zandra','2011-09-16',3540000),
+(15,'Miquela','2019-11-28',2850000);
+/*!40000 ALTER TABLE `employee` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -673,7 +673,7 @@ CREATE TABLE `orders` (
   KEY `fk_customer_id` (`customer_id`),
   KEY `fk_emp_id` (`emp_id`),
   CONSTRAINT `fk_customer_id` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`),
-  CONSTRAINT `fk_emp_id` FOREIGN KEY (`emp_id`) REFERENCES `emp` (`id`)
+  CONSTRAINT `fk_emp_id` FOREIGN KEY (`emp_id`) REFERENCES `employee` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=179 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -874,4 +874,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-12-27  4:07:17
+-- Dump completed on 2023-01-10  2:32:10
