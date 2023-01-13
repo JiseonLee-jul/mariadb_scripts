@@ -74,11 +74,13 @@ INSERT INTO salary VALUES
     (15, NULL, NULL);
 SELECT * FROM salary;
 
+
 -- UPDATE
 UPDATE employee e, salary s SET s.salary = e.salary, s.from_date = e.start_date WHERE e.id = s.emp_id;
 UPDATE employee e 
     INNER JOIN salary s ON e.id = s.emp_id
     SET s.salary = e.salary, s.from_date = e.start_date;
+
 
 -- DELETE
 CREATE TABLE employee_copy (SELECT * FROM employee);
@@ -103,6 +105,11 @@ SELECT customer_id, date_ordered, total_price, emp_id
     FROM orders
     WHERE emp_id IN (SELECT id FROM employee WHERE salary*12 >= 45000000);
 
+SELECT customer_id FROM orders
+SELECT id, name, phone
+    FROM customer
+    WHERE id NOT IN (SELECT customer_id FROM orders);
+
 
 -- FROM
 SELECT beverage_id, sum(beverage_cnt) AS sumcnt 
@@ -120,13 +127,15 @@ SELECT *
 
 
 -- SELECT
-SELECT * FROM beverage b, orderdetails o WHERE b.id = o.beverage_id limit 5;
 SELECT (SELECT name FROM beverage b WHERE b.id = o.beverage_id) AS beverage_name,
-        SUM(beverage_cnt) AS sumcnt
-        FROM orderdetails o
-        GROUP BY beverage_id
-        ORDER BY SUM(beverage_cnt) DESC;
+        sum(beverage_cnt) AS sumcnt
+    FROM orderdetails o
+    GROUP BY beverage_id
+    ORDER BY SUM(beverage_cnt) DESC;
 
-
-UPDATE test2, test3 SET test2.emp_class = 'Z', test3.emp_name = 'zz' WHERE test2.emp_no = test3.emp_no;
-UPDATE test2, test3 SET test2.emp_class=test3.emp_name WHERE test2.emp_no = test3.emp_no;
+SELECT b.name AS beverage_name, sum(o.beverage_cnt) AS sumcnt
+    FROM beverage b 
+    INNER JOIN orderdetails o
+    ON b.id = o.beverage_id
+    GROUP BY beverage_id
+    ORDER BY SUM(beverage_cnt) DESC;
