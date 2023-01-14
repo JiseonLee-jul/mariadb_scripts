@@ -18,12 +18,12 @@ INSERT INTO beverage (name, category, price) VALUE ('YujaTea', 'HotTeas', NULL);
 INSERT INTO beverage (name, category) VALUE ('CaffeMocha', 'HotCoffees');
 
 ---- b. INSERT INTO ... SELECT ...
-CREATE TABLE test (
+CREATE TABLE beverage_count (
     beverage_id int,
     beverage_cnt int
 );
 
-INSERT INTO test 
+INSERT INTO beverage_count 
     SELECT beverage_id, sum(beverage_cnt) 
     FROM orderdetails
     GROUP BY beverage_id;
@@ -51,7 +51,7 @@ INSERT INTO beverage (name, category, price) VALUE ('MatchaLatte', 'HotDrinks', 
 INSERT INTO beverage 
     VALUE (30, 'MatchaLatte', 'HotDrinks', 6000),
           (31, 'JavaChipFrappuccino', 'Frappuccino', 6500),
-          (31, 'DolceLatte', 'HotCoffees', 6500);
+          (31, 'DolceLatte', 'HotCoffees', 6500); --에러
 
 INSERT IGNORE INTO beverage 
     VALUE (30, 'MatchaLatte', 'HotDrinks', 6000),
@@ -71,28 +71,28 @@ INSERT IGNORE INTO customer(name, phone)
 ---------- 2. UPDATE : 데이터 수정하기 -----------
 ---- a. single table syntax
 SELECT * FROM beverage WHERE name = 'PinkDrink';
-UPDATE beverage SET price = 4000 WHERE name = 'PinkDrink';
+UPDATE beverage SET price = 6500 WHERE name = 'PinkDrink';
 
 SELECT * FROM beverage WHERE price = 7500;
 UPDATE beverage SET price = 8000 WHERE price = 7500;
+SELECT * FROM beverage WHERE price = 8000;
 
 SELECT * FROM beverage WHERE price = (SELECT min(price) FROM beverage);
 UPDATE beverage SET price = price + 500 WHERE price = (SELECT min(price) FROM beverage);
 SELECT * FROM beverage WHERE name = 'Espresso';
 
 -- where 조건 사용 주의
-UPDATE test SET beverage_cnt=20;
+UPDATE beverage_count SET beverage_cnt=43;
 
 
 ---------- 3. DELETE : 데이터 수정하기 -----------
 ---- a. single table syntax
 SELECT * FROM beverage;
-DELETE FROM beverage WHERE name = 'EnglishBreakfastTea';
+DELETE FROM beverage WHERE name = 'JavachipFrappuccino';
 DELETE FROM beverage WHERE price = 5000 RETURNING *; 
 
-SELECT count(*) FROM beverage;
 DELETE FROM beverage WHERE name IN (SELECT name FROM beverage where id > 20);
 SELECT count(*) FROM beverage;
 
 -- where 조건 사용 주의
-DELETE FROM test;
+DELETE FROM beverage_count;
