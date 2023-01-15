@@ -46,13 +46,6 @@ SELECT e.name, e.salary * 12 as salary_year, sum(total_cnt) as sum_cnt, sum(tota
     ORDER BY 4 DESC, 3 DESC
     LIMIT 5;
 
-SELECT * FROM employee;
-CREATE TABLE copy_dual2(
-    col1 INT,
-    col2 INT
-)
-SELECT * FROM emp, copy_dual2;
-
 
 -- UPDATE
 CREATE TABLE salary(emp_id int, salary int, from_date date);
@@ -93,7 +86,7 @@ DELETE s, e FROM salary s
 
 
 ------------------- 2. SUBQUERY ----------------------
----- a. 종류
+---- 활용
 -- WHERE
 SELECT * FROM employee WHERE name = 'Ashli';
 SELECT customer_id, date_ordered, total_price, emp_id 
