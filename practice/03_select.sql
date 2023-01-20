@@ -1,30 +1,71 @@
------------------- SELECT ------------------
--- create_database_load_new.sql 사용하여 테이블 생성
+-- 테이블 구조 확인
+DESC customer;
+DESCRIBE customer;
 
--- management db의 table 보기
-use management;
-show tables;
+SHOW COLUMNS FROM customer;
+SHOW FULL COLUMNS FROM customer;
 
-select * from customer;
-select id, name from customer;
+SHOW CREATE TABLE customer;
 
--- alias
-select id, name, phone as tel from customer;
-select id, name, phone 'tel' from customer;
-select count(*) 'cnt' from customer;
+-- 모든 데이터 조회
+SELECT * FROM customer;
 
--- distinct/unique
-select prd_id from purchase; -- 55 rows
-select distinct prd_id from purchase; -- 34 rows
-select unique prd_id from purchase;
+-- 특정 필드만 조회
+SELECT name, age FROM customer;
 
--- 연산자
-select * from customer where age >= 30;
-select distinct name from product where inventory < 100 AND group ='E';
+-- 조건을 만족하는 특정 데이터 조회
+SELECT * FROM customer WHERE age=36;
 
-select name from customer where age between 20 and 30;
-select name from customer where age >= 20 and age <= 30;
+-- 산술 연산자
+SELECT 23.5 + 7, 23.5 - 7, 23.5 / 2, 23.5 DIV 2, 23.5 % 2, 23.5 MOD 2, 23.5 * 2;
 
-select name from customer where rank in ('MS001', 'MS003', 'MS004');
-select name from customer where rank = 'MS001' OR rank = 'MS003' OR rank = 'MS004';
+-- 논리 연산자 & 비교연산자
+SELECT * FROM customer WHERE age>=20 AND gender='M';
+SELECT * FROM customer WHERE email<=>NULL;
+
+-- SQL 연산자
+
+-- IN
+SELECT * FROM beverage WHERE price IN (3500, 5000);
+SELECT * FROM beverage WHERE price=3500 OR price=5000;
+
+-- BETWEEN
+SELECT * FROM beverage WHERE price BETWEEN 3500 AND 5000;
+SELECT * FROM beverage WHERE price>=3500 AND price<=5000;
+
+-- LIKE
+SELECT * FROM beverage WHERE category LIKE 'Hot%';
+
+-- IS NULL / IS NOT NULL
+SELECT * FROM customer WHERE nickname IS NULL;
+
+SELECT * FROM customer WHERE nickname=NULL;
+SELECT length(nickname) FROM customer WHERE nickname IS NULL;
+
+-- 별칭
+SELECT date_format(date_ordered, '%Y-%m-%d') FROM orders;
+SELECT date_format(date_ordered, '%Y-%m-%d') AS '주문날짜' FROM orders;
+
+SELECT b.* FROM beverage b;
+
+-- 정렬
+SELECT * FROM customer ORDER BY name;
+SELECT * FROM customer ORDER BY name ASC;
+SELECT * FROM customer ORDER BY name DESC;
+
+SELECT * FROM customer ORDER BY 2 DESC;
+SELECT * FROM customer ORDER BY 2 ASC, 4 DESC;
+
+-- 중복 결과 제외
+SELECT category FROM beverage;
+SELECT DISTINCT category FROM beverage;
+SELECT UNIQUE category FROM beverage;
+
+-- 지정 갯수만 조회하기
+SELECT * FROM beverage ORDER BY price DESC;
+SELECT * FROM beverage ORDER BY price DESC LIMIT 5;
+
+SELECT * FROM beverage ORDER BY price DESC LIMIT 6, 5;
+
+SELECT b.*, RANK() OVER (ORDER BY price DESC) AS 'rank' FROM beverage b;
 
