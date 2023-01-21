@@ -38,3 +38,13 @@ SELECT * FROM emp_seq;
 
 SELECT LASTVAL(emp_seq);
 SELECT NEXTVAL(emp_seq);
+
+SELECT SETVAL(emp_seq, 100);
+SELECT * FROM emp_seq;
+SELECT NEXTVAL(emp_seq);
+SELECT * FROM emp_seq;
+
+---- c. Sequence 제거
+DROP SEQUENCE emp_seq;
+SHOW FULL TABLES WHERE Table_type ='SEQUENCE';
+SELECT * FROM employee;
