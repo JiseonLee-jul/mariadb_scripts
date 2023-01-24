@@ -1,12 +1,49 @@
---------------------- 1. synonym ----------------------
-SHOW DATABASES;
-CALL sys.create_synonym_db('information_schema', 'info');
-CALL sys.create_synonym_db('performance_schema', 'perf');
+--------------------- 1. Trigger ----------------------- 
+---- a. Trigger 생성
+-- ex1 새로운 주문이 들어오면 음료별 총 주문 개수 테이블 업데이트하는 트리거 만들기
+CREATE TABLE beverage_count (
+    SELECT beverage_id, sum(beverage_cnt) AS sumcnt 
+    FROM orderdetails 
+    GROUP BY beverage_id
+);
+SELECT * FROM beverage_count;
 
-SHOW FULL TABLES FROM info;
-SHOW FULL TABLES FROM perf;
+DELIMITER //
+CREATE TRIGGER orderdetails_beverage_count
+    AFTER INSERT ON orderdetails
+    FOR EACH ROW
+    BEGIN
+        UPDATE beverage_count 
+            SET sumcnt = sumcnt + NEW.beverage_cnt 
+            WHERE beverage_id = NEW.beverage_id;
+    END;
+//
+DELIMITER ;
 
-DROP DATABASE info, perf;
+ALTER TABLE orderdetails DROP CONSTRAINT fk_orders_id;
+INSERT INTO orderdetails VALUE (179, 1, 5);
+SELECT * FROM orderdetails;
+SELECT * FROM beverage_count;
+
+---- b. Trigger 메타데이터
+SHOW CREATE TRIGGER orderdetails_beverage_count\G
+SHOW TRIGGERS\G
+SELECT * FROM information_schema.triggers\G
+
+---- c. Trigger 제거
+DROP TRIGGER orderdetails_beverage_count;
+SHOW TRIGGERS\G
+
+-- ex2) 
+DELIMITER //
+CREATE TRIGGER orderdetails_to_orders
+    AFTER INSERT ON orderdetails
+    FOR EACH ROW
+    BEGIN
+        INSERT INTO 
+    END;
+//
+DELIMITER ;
 
 --------------------- 2. Sequence ----------------------
 ---- a. Seqeunce 생성
@@ -48,3 +85,13 @@ SELECT * FROM emp_seq;
 DROP SEQUENCE emp_seq;
 SHOW FULL TABLES WHERE Table_type ='SEQUENCE';
 SELECT * FROM employee;
+
+--------------------- 3. Synonym -----------------------
+SHOW DATABASES;
+CALL sys.create_synonym_db('information_schema', 'info');
+CALL sys.create_synonym_db('performance_schema', 'perf');
+
+SHOW FULL TABLES FROM info;
+SHOW FULL TABLES FROM perf;
+
+DROP DATABASE info, perf;
