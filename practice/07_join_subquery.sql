@@ -32,19 +32,29 @@ SELECT * FROM t1, t2;
 
 ---- b. 활용
 -- SELECT
-SELECT b.category as beverage_category, count(*) as cnt
+SELECT *
+    FROM orderdetails o 
+    INNER JOIN beverage b ON o.beverage_id = b.id
+    ORDER BY 6;
+
+SELECT b.category as beverage_category, sum(beverage_cnt) as cnt
     FROM orderdetails o 
     INNER JOIN beverage b ON o.beverage_id = b.id
     GROUP BY b.category
     ORDER BY 2 DESC;
 
+
+
 SELECT e.name, e.salary * 12 as salary_year, sum(total_cnt) as sum_cnt, sum(total_price) as sum_price
-    FROM emp e
+    FROM employee e
     INNER JOIN orders o ON e.id = o.emp_id
     WHERE o.date_ordered LIKE '2022-12-08%'
     GROUP BY e.name
     ORDER BY 4 DESC, 3 DESC
     LIMIT 5;
+
+-- select count(*) from orders where date_ordered like '2022-12-08%';
+-- select emp_id, sum(total_cnt) from orders where date_ordered like '2022-12-08%' group by emp_id;
 
 
 -- UPDATE
@@ -92,13 +102,18 @@ SELECT * FROM employee WHERE name = 'Ashli';
 SELECT customer_id, date_ordered, total_price, emp_id 
     FROM orders
     WHERE emp_id = (SELECT id FROM employee WHERE name = 'Ashli');
+--
+SELECT  o.customer_id, o.date_ordered, o.total_price, o.emp_id 
+    FROM orders o, employee e
+    WHERE o.emp_id=e.id AND e.name='Ashli';
+--
 
-SELECT *, salary*12 AS salary_year FROM employee WHERE salary*12 >= 45000000;
+SELECT *, salary*12 AS salary_year FROM employee WHERE salary >= 45000000/12;
 SELECT customer_id, date_ordered, total_price, emp_id
     FROM orders
     WHERE emp_id IN (SELECT id FROM employee WHERE salary*12 >= 45000000);
 
-SELECT customer_id FROM orders
+SELECT customer_id FROM orders;
 SELECT id, name, phone
     FROM customer
     WHERE id NOT IN (SELECT customer_id FROM orders);
