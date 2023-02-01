@@ -42,21 +42,21 @@ INSERT INTO beverage SET name = 'SweetPotatoLatte', category = 'HotDrinks', pric
 INSERT INTO beverage (name, category, price) VALUE ('Espresso', 'HotCoffees', 3000) 
     RETURNING *;
 INSERT INTO beverage (name, category, price) VALUE ('EnglishBreakfastTea', 'HotTeas', 5000) 
-    RETURNING concat_ws('_', category, name),  price, price*2;
+    RETURNING concat_ws('_', category, name) AS 'concat_column',  price, price*2;
 INSERT INTO beverage (name, category, price) VALUE ('MatchaLatte', 'HotDrinks', 6000) 
     RETURNING count(*); -- 에러
 
 
 ---- d INSERT 옵션 : IGNORE
 INSERT INTO beverage 
-    VALUE (30, 'MatchaLatte', 'HotDrinks', 6000),
+    VALUE (31, 'MatchaLatte', 'HotDrinks', 6000),
           (31, 'JavaChipFrappuccino', 'Frappuccino', 6500),
-          (31, 'DolceLatte', 'HotCoffees', 6500); --에러
+          (32, 'DolceLatte', 'HotCoffees', 6500); --에러
 
 INSERT IGNORE INTO beverage 
-    VALUE (30, 'MatchaLatte', 'HotDrinks', 6000),
+    VALUE (31, 'MatchaLatte', 'HotDrinks', 6000),
           (31, 'JavaChipFrappuccino', 'Frappuccino', 6500),
-          (31, 'DolceLatte', 'HotCoffees', 6500);
+          (32, 'DolceLatte', 'HotCoffees', 6500);
 
 SHOW WARNINGS;
 
