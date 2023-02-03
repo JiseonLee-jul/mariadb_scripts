@@ -88,10 +88,10 @@ UPDATE beverage_count SET beverage_cnt=43;
 ---------- 3. DELETE : 데이터 수정하기 -----------
 ---- a. single table syntax
 SELECT * FROM beverage;
-DELETE FROM beverage WHERE name = 'JavachipFrappuccino';
+DELETE FROM beverage WHERE name = 'DolceLatte';
 DELETE FROM beverage WHERE price = 5000 RETURNING *; 
 
-DELETE FROM beverage WHERE name IN (SELECT name FROM beverage where id > 20);
+DELETE FROM beverage WHERE name IN (SELECT name FROM beverage WHERE id > 20);
 SELECT count(*) FROM beverage;
 
 -- where 조건 사용 주의
