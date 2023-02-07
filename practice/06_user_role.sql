@@ -17,10 +17,10 @@ CREATE USER 'user1'@'%' IDENTIFIED BY '1111'; --에러
 SELECT user, host, password FROM mysql.user WHERE user = 'user1' AND host = '%'; 
 ALTER USER 'user1'@'%' IDENTIFIED BY '2222';
 
--- [user1 user로 접속] : mariadb -u user1 -h localhost -p
+-- [user1 user로 접속] : mariadb -u user1 -h localhost -p"1111"
 SELECT USER();
 ALTER USER 'user1'@'localhost' ACCOUNT LOCK; --에러
--- [root user로 접속] : mariadb -u root -h localhost -p
+-- [root user로 접속] : mariadb -u root -h localhost -p"mariadb"
 ALTER USER 'user1'@'localhost' ACCOUNT LOCK;
 ALTER USER 'user1'@'localhost' ACCOUNT UNLOCK;
 
@@ -32,7 +32,7 @@ DROP USER 'user2'@'localhost'; -- 에러
 
 
 
-------------- 2. Privilege -------------
+------------- 2. PRIVILEGE -------------
 -- a. 권한 확인하기
 SHOW GRANTS FOR 'user1'@'localhost';
 SHOW GRANTS;
