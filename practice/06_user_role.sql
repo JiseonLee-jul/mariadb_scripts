@@ -41,14 +41,14 @@ SELECT * FROM information_schema.user_privileges WHERE GRANTEE = "'user1'@'local
 
 
 -- b. 권한 부여하기
--- [user1 user로 접속] : mariadb -u user1 -h localhost -p
+-- [user1 user로 접속] : mariadb -u user1 -h localhost -p"1111"
 SHOW DATABASES; 
 CREATE DATABASE user_db; --에러
 
--- [root user로 접속] : mariadb -u root -h localhost -p
+-- [root user로 접속] : mariadb -u root -h localhost -p"mariadb"
 GRANT show databases, create ON *.* TO 'user1'@'localhost';
 SHOW GRANTS FOR 'user1'@'localhost';
--- [user1 user로 접속] : mariadb -u user1 -h localhost -p
+-- [user1 user로 접속] : mariadb -u user1 -h localhost -p"1111"
 SHOW DATABASES; 
 CREATE DATABASE user_db;
 USE user_db;
@@ -61,13 +61,13 @@ SHOW GRANTS FOR 'user2'@'localhost'; -- 에러
 CREATE USER 'user2'@'localhost' IDENTIFIED BY '2222'; -- 에러
 GRANT CREATE ON *.* TO 'user2'@'localhost' IDENTIFIED BY '2222'; -- 에러
 
--- [root user로 접속] : mariadb -u root -h localhost -p
+-- [root user로 접속] : mariadb -u root -h localhost -p"mariadb"
 GRANT create user, reload ON *.* TO 'user1'@'localhost' with grant option;
 GRANT select ON mysql.* TO 'user1'@'localhost';
 GRANT select, insert, update, delete ON user_db.* TO 'user1'@'localhost';
 SHOW GRANTS FOR 'user1'@'localhost';
 
--- [user1 user로 접속] : mariadb -u user1 -h localhost -p
+-- [user1 user로 접속] : mariadb -u user1 -h localhost -p"1111"
 USE user_db;
 INSERT INTO user_table VALUE (1, 2);
 SELECT * FROM user_table;
@@ -85,13 +85,13 @@ GRANT SUPER ON *.* TO 'user2'@'localhost'; --에러
 -- c. 권한 회수하기
 REVOKE SELECT ON user_db.* FROM 'user2'@'localhost';
 SHOW GRANTS FOR 'user2'@'localhost';
--- [user2 user로 접속] : mariadb -u user2 -h localhost -p
+-- [user2 user로 접속] : mariadb -u user2 -h localhost -p"2222"
 USE user_db;
 SELECT * FROM user_table; -- 에러
 
--- [user1 user로 접속] : mariadb -u user1 -h localhost -p
+-- [user1 user로 접속] : mariadb -u user1 -h localhost -p"1111"
 REVOKE ALL PRIVILEGES, GRANT OPTION FROM 'user1'@'localhost', 'user2'@'localhost';
--- [root user로 접속] : mariadb -u root -h localhost -p
+-- [root user로 접속] : mariadb -u root -h localhost -p"mariadb"
 SHOW GRANTS FOR 'user1'@'localhost';
 SHOW GRANTS FOR 'user2'@'localhost';
 
@@ -111,29 +111,29 @@ SHOW GRANTS FOR dev_select;
 GRANT dev_select TO 'user1'@'localhost';
 SHOW GRANTS FOR 'user1'@'localhost';
 
--- [user1 user로 접속] : mariadb -u user1 -h localhost -p
+-- [user1 user로 접속] : mariadb -u user1 -h localhost -p"1111"
 SELECT CURRENT_ROLE();
 SHOW GRANTS;
 SET ROLE dev_select;
 SET ROLE none;
--- [root user로 접속] : mariadb -u root -h localhost -p
+-- [root user로 접속] : mariadb -u root -h localhost -p"mariadb"
 SET DEFAULT ROLE dev_select FOR 'user1'@'localhost'; 
 SELECT user, host, is_role, default_role FROM mysql.user;
--- [user1 user로 접속] : mariadb -u user1 -h localhost -p
+-- [user1 user로 접속] : mariadb -u user1 -h localhost -p"1111"
 SELECT CURRENT_ROLE();
 
 SET DEFAULT ROLE NONE;
 
 
 --c. 롤 제거하기
--- [root user로 접속] : mariadb -u root -h localhost -p
+-- [root user로 접속] : mariadb -u root -h localhost -p"mariadb"
 DROP ROLE dev_select;
 SELECT user, host, is_role from mysql.user WHERE is_role = 'Y';
 
 
 
 ------------- 4. 활용 -------------
--- [root user로 접속] : mariadb -u root -p
+-- [root user로 접속] : mariadb -u root -h localhost -p"mariadb"
 CREATE USER 'mgt'@'localhost' IDENTIFIED BY 'mgt';
 CREATE USER 'sales'@'localhost' IDENTIFIED BY 'sales';
 
@@ -154,7 +154,7 @@ USE cafe;
 SHOW TABLES;
 SELECT * FROM dept; --에러 
 
--- [root user로 접속] : mariadb -u root -p
+-- [root user로 접속] : mariadb -u root -h localhost -p"mariadb"
 CREATE ROLE developer;
 GRANT SELECT, INSERT, UPDATE, DELETE ON cafe.* TO developer;
 
