@@ -107,11 +107,18 @@ GRANT SELECT ON *.* TO dev_select;
 SELECT user, host, is_role FROM mysql.user WHERE is_role = 'Y';
 SHOW GRANTS FOR dev_select;
 
+SHOW GRANTS;
+SELECT * FROM information_schema_applicable_roles;
+SELECT * FROM mysql.roles_mapping;
+
 --b. 롤 부여/활성화
 GRANT dev_select TO 'user1'@'localhost';
 SHOW GRANTS FOR 'user1'@'localhost';
 
+SELECT * FROM mysql.roles_mapping;
 -- [user1 user로 접속] : mariadb -u user1 -h localhost -p"1111"
+GRANT dev_select TO 'user2'@'localhost'; --에러
+
 SELECT CURRENT_ROLE();
 SHOW GRANTS;
 SET ROLE dev_select;
@@ -175,7 +182,5 @@ USE cafe;
 SHOW TABLES;
 SELECT * FROM dept;
 
-
----- 참조
-SELECT * FROM information_schema.APPLICABLE_ROLES;
+SELECT * FROM information_schema.applicable_roles;
 SELECT * FROM mysql.roles_mapping;
