@@ -10,24 +10,29 @@ SELECT * FROM t2;
 
 ---- a. 종류
 --INNER JOIN
-SELECT * FROM t1 INNER JOIN t2 ON t1.col1 = t2.col1;
-SELECT * FROM t1, t2 WHERE t1.col1 = t2.col1;
+SELECT t2.col1, t2.col2 FROM t1 INNER JOIN t2 ON t1.col1 = t2.col1;
+SELECT t2.col1, t2.col2 FROM t1, t2 WHERE t1.col1 = t2.col1;
 
 -- LEFT JOIN
-SELECT * FROM t1 LEFT JOIN t2 ON t1.col1 = t2.col1;
+SELECT t1.col1 AS 'tl.col1', t2.col1 AS 't2.col1', t2.col2 FROM t1 LEFT JOIN t2 ON t1.col1 = t2.col1;
 
 -- RIGHT JOIN
-SELECT * FROM t1 RIGHT JOIN t2 ON t1.col1 = t2.col1;
-SELECT * FROM t2 LEFT JOIN t1 ON t2.col1 = t1.col1;
-
--- FULL OUTER JOIN
-SELECT * FROM t1 LEFT JOIN t2 ON t1.col1 = t2.col1
-UNION
-SELECT * FROM t1 RIGHT JOIN t2 ON t1.col1 = t2.col1;
+SELECT t1.col1 AS 'tl.col1', t2.col1 AS 't2.col1', t2.col2 FROM t1 RIGHT JOIN t2 ON t1.col1 = t2.col1;
+SELECT t1.col1 AS 'tl.col1', t2.col1 AS 't2.col1', t2.col2 FROM t2 LEFT JOIN t1 ON t2.col1 = t1.col1;
 
 -- CROSS JOIN
-SELECT * FROM t1 CROSS JOIN t2;
-SELECT * FROM t1, t2;
+SELECT t1.col1 AS 'tl.col1', t2.col1 AS 't2.col1', t2.col2 FROM t1 CROSS JOIN t2;
+SELECT t1.col1 AS 'tl.col1', t2.col1 AS 't2.col1', t2.col2 FROM t1, t2;
+
+-- FULL OUTER JOIN
+SELECT t1.col1 AS 'tl.col1', t2.col1 AS 't2.col1', t2.col2 
+    FROM t1 
+    LEFT JOIN t2 ON t1.col1 = t2.col1
+UNION
+SELECT t1.col1 AS 'tl.col1', t2.col1 AS 't2.col1', t2.col2 
+    FROM t1 
+    RIGHT JOIN t2 ON t1.col1 = t2.col1;
+
 
 
 ---- b. 활용
@@ -37,12 +42,17 @@ SELECT *
     INNER JOIN beverage b ON o.beverage_id = b.id
     ORDER BY 6;
 
-SELECT b.category as beverage_category, sum(beverage_cnt) as cnt
+SELECT b.category as beverage_category, sum(beverage_cnt) as beverage_cnt
     FROM orderdetails o 
     INNER JOIN beverage b ON o.beverage_id = b.id
     GROUP BY b.category
     ORDER BY 2 DESC;
 
+
+SELECT * 
+    FROM employee e
+    INNER JOIN orders o ON e.id = o.emp_id
+    ORDER BY 2;
 
 
 SELECT e.name, e.salary * 12 as salary_year, sum(total_cnt) as sum_cnt, sum(total_price) as sum_price
@@ -50,8 +60,17 @@ SELECT e.name, e.salary * 12 as salary_year, sum(total_cnt) as sum_cnt, sum(tota
     INNER JOIN orders o ON e.id = o.emp_id
     WHERE o.date_ordered LIKE '2022-12-08%'
     GROUP BY e.name
-    ORDER BY 4 DESC, 3 DESC
-    LIMIT 5;
+    ORDER BY 4 DESC, 3 DESC;
+
+
+SELECT e.name, e.salary * 12 as salary_year, sum(total_cnt) as sum_cnt, sum(total_price) as sum_price
+    FROM employee e
+    INNER JOIN (SELECT date_ordered, total_cnt, total_price, emp_id 
+                FROM orders 
+                WHERE date_ordered like '2022-12-08%') o 
+    ON e.id = o.emp_id
+    GROUP BY e.name
+    ORDER BY 4 DESC, 3 DESC;
 
 -- select count(*) from orders where date_ordered like '2022-12-08%';
 -- select emp_id, sum(total_cnt) from orders where date_ordered like '2022-12-08%' group by emp_id;
