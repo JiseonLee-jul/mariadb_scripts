@@ -130,7 +130,10 @@ SELECT  o.customer_id, o.date_ordered, o.total_price, o.emp_id
 SELECT *, salary*12 AS salary_year FROM employee WHERE salary >= 45000000/12;
 SELECT customer_id, date_ordered, total_price, emp_id
     FROM orders
-    WHERE emp_id IN (SELECT id FROM employee WHERE salary*12 >= 45000000);
+    WHERE emp_id IN (SELECT id FROM employee WHERE salary >= 45000000/12);
+SELECT customer_id, date_ordered, total_price, emp_id
+    FROM orders
+    WHERE emp_id =ANY(SELECT id FROM employee WHERE salary >= 45000000/12);
 
 SELECT customer_id FROM orders;
 SELECT id, name, phone
@@ -141,19 +144,22 @@ SELECT id, name, phone
 -- FROM
 SELECT beverage_id, sum(beverage_cnt) AS sumcnt 
     FROM orderdetails 
-    GROUP BY beverage_id
-    ORDER BY sum(beverage_cnt) DESC;
-SELECT *
+    GROUP BY beverage_id;
+SELECT A.name, B.sumcnt
     FROM beverage A, (
     SELECT beverage_id, sum(beverage_cnt) AS sumcnt 
         FROM orderdetails 
         GROUP BY beverage_id
-        ORDER BY sum(beverage_cnt) DESC
     ) B
-    WHERE A.id = B.beverage_id;
+    WHERE A.id = B.beverage_id
+    ORDER BY B.sumcnt DESC;
 
 
 -- SELECT
+SELECT name FROM beverage b, orderdetails o WHERE b.id = o.beverage_id;
+SELECT (SELECT name FROM beverage b WHERE b.id = o.beverage_id) AS beverage_name,
+        beverage_cnt
+    FROM orderdetails o;
 SELECT (SELECT name FROM beverage b WHERE b.id = o.beverage_id) AS beverage_name,
         sum(beverage_cnt) AS sumcnt
     FROM orderdetails o

@@ -30,9 +30,44 @@ SHOW CREATE TRIGGER orderdetails_beverage_count\G
 SHOW TRIGGERS\G
 SELECT * FROM information_schema.triggers\G
 
+
 ---- c. Trigger 제거
 DROP TRIGGER orderdetails_beverage_count;
 SHOW TRIGGERS\G
+
+---- d. Trigger와 Transaction
+SHOW CREATE TABLE beverage_count;
+
+DELIMITER //
+CREATE TRIGGER orderdetails_beverage_count_err
+    AFTER INSERT ON orderdetails
+    FOR EACH ROW
+    BEGIN
+        UPDATE beverage_count 
+            SET cnt = cnt + NEW.beverage_cnt 
+            WHERE beverage_id = NEW.beverage_id;
+    END;
+//
+DELIMITER ;
+
+INSERT INTO orderdetails VALUE (180, 1, 3);
+SELECT * FROM orderdetails;
+SELECT * FROM beverage_count;
+
+
+ALTER TABLE orderdetails DROP CONSTRAINT fk_beverage_id;
+ALTER TABLE orderdetails ENGINE=MyISAM;
+
+ALTER TABLE beverage_count ENGINE=MyISAM;
+SHOW CREATE TABLE beverage_count;
+
+
+
+INSERT INTO orderdetails VALUE (180, 1, 3);
+SELECT * FROM orderdetails;
+SELECT * FROM beverage_count;
+
+
 
 -- ex2) 
 DELIMITER //
