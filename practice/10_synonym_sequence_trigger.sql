@@ -57,10 +57,7 @@ SELECT * FROM beverage_count;
 
 ALTER TABLE orderdetails DROP CONSTRAINT fk_beverage_id;
 ALTER TABLE orderdetails ENGINE=MyISAM;
-
-ALTER TABLE beverage_count ENGINE=MyISAM;
-SHOW CREATE TABLE beverage_count;
-
+SHOW CREATE TABLE orderdetails;
 
 
 INSERT INTO orderdetails VALUE (180, 1, 3);
