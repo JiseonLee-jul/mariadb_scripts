@@ -39,7 +39,6 @@ SHOW GRANTS;
 SELECT * FROM mysql.user WHERE user = 'user1'\G
 SELECT * FROM information_schema.user_privileges WHERE GRANTEE = "'user1'@'localhost'"\G
 
-
 -- b. 권한 부여하기
 -- [user1 user로 접속] : mariadb -u user1 -h localhost -p"1111"
 SHOW DATABASES; 
