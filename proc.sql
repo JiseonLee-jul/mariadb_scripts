@@ -9,7 +9,7 @@ DELIMITER $$
 CREATE PROCEDURE myproc()
 BEGIN
     DECLARE i int DEFAULT 0;
-    WHILE i <= 1000 DO
+    WHILE i <= 10000 DO
         INSERT INTO mytable (code, active, total) VALUES (i, 1, 1);
         SET i = i + 1;
     END WHILE;
