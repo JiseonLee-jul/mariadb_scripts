@@ -1,14 +1,11 @@
-drop database if exists test;
+DROP DATABASE IF EXISTS test;
+CREATE DATABASE test;
+USE test
 
-create database test;
+DROP TABLE IF EXISTS mytable;
+CREATE TABLE mytable(code int, active int, total int);
 
-use test
-
-drop table if exists mytable;
-
-create table mytable(code int, active int, total int);
-
-delimiter $$
+DELIMITER $$
 CREATE PROCEDURE myproc()
 BEGIN
     DECLARE i int DEFAULT 0;
@@ -17,4 +14,4 @@ BEGIN
         SET i = i + 1;
     END WHILE;
 END $$
-delimiter ;
+DELIMITER ;

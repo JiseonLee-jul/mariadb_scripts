@@ -14,3 +14,4 @@ SHOW VARIABLES LIKE 'long_query_time';
 SET GLOBAL slow_query_log=1;
 SET GLOBAL slow_query_log_file='slow.log';
 SET GLOBAL long_query_time=5;
+
