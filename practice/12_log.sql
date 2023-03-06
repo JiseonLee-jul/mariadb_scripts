@@ -1,5 +1,13 @@
 ------------------ General Query Log --------------------
 SHOW VARIABLES LIKE '%datadir'; 
+SHOW VARIABLES LIKE '%error%';
+
+SET GLOBAL error_log=1;
+SET GLOBAL error_log_file='general.log';
+
+
+------------------ General Query Log --------------------
+SHOW VARIABLES LIKE '%datadir'; 
 SHOW VARIABLES LIKE '%general%';
 
 SET GLOBAL general_log=1;
