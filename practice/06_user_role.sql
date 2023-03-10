@@ -162,7 +162,7 @@ SELECT * FROM dept; --에러
 
 -- [root user로 접속] : mariadb -u root -h localhost -p"mariadb"
 CREATE ROLE developer;
-GRANT SELECT, INSERT, UPDATE, DELETE ON cafe.* TO developer;
+GRANT SELECT ON cafe.* TO developer;
 
 CREATE USER 'dev1'@'localhost' IDENTIFIED BY 'dev1';
 CREATE USER 'dev2'@'localhost' IDENTIFIED BY 'dev2';
