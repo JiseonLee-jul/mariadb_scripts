@@ -160,7 +160,7 @@ USE cafe;
 SHOW TABLES;
 SELECT * FROM dept; --에러 
 
--- [root user로 접속] : mariadb -u root -h localhost -p"mariadb"
+-- [root user로 접속] : mariadb -u root -h localhost -p"mariadb";
 CREATE ROLE developer;
 GRANT SELECT ON cafe.* TO developer;
 
