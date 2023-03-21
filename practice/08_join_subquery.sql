@@ -75,29 +75,8 @@ SELECT e.name, e.salary * 12 as salary_year, sum(total_cnt) as sum_cnt, sum(tota
 -- select count(*) from orders where date_ordered like '2022-12-08%';
 -- select emp_id, sum(total_cnt) from orders where date_ordered like '2022-12-08%' group by emp_id;
 
-
 -- UPDATE
-CREATE TABLE salary(emp_id int, salary int, from_date date);
-INSERT INTO salary VALUES 
-    (1, NULL, NULL),
-    (2, NULL, NULL),
-    (3, NULL, NULL),
-    (4, NULL, NULL),
-    (5, NULL, NULL),
-    (6, NULL, NULL),
-    (7, NULL, NULL),
-    (8, NULL, NULL),
-    (9, NULL, NULL),
-    (10, NULL, NULL),
-    (11, NULL, NULL),
-    (12, NULL, NULL),
-    (13, NULL, NULL),
-    (14, NULL, NULL),
-    (15, NULL, NULL);
 SELECT * FROM salary;
-
-
--- UPDATE
 UPDATE employee e, salary s SET s.salary = e.salary, s.from_date = e.start_date WHERE e.id = s.emp_id;
 UPDATE employee e 
     INNER JOIN salary s ON e.id = s.emp_id
@@ -122,23 +101,34 @@ SELECT customer_id, date_ordered, total_price, emp_id
     FROM orders
     WHERE emp_id = (SELECT id FROM employee WHERE name = 'Ashli');
 --
-SELECT  o.customer_id, o.date_ordered, o.total_price, o.emp_id 
+SELECT o.customer_id, o.date_ordered, o.total_price, o.emp_id 
     FROM orders o, employee e
     WHERE o.emp_id=e.id AND e.name='Ashli';
 --
 
-SELECT *, salary*12 AS salary_year FROM employee WHERE salary >= 45000000/12;
+SELECT *, salary*12 AS salary_year 
+    FROM employee 
+    WHERE salary >= 45000000/12;
 SELECT customer_id, date_ordered, total_price, emp_id
     FROM orders
-    WHERE emp_id IN (SELECT id FROM employee WHERE salary >= 45000000/12);
+    WHERE emp_id IN (SELECT id FROM employee WHERE salary >= 45000000/12)
+    ORDER BY 1;
 SELECT customer_id, date_ordered, total_price, emp_id
     FROM orders
-    WHERE emp_id =ANY(SELECT id FROM employee WHERE salary >= 45000000/12);
+    WHERE emp_id =ANY(SELECT id FROM employee WHERE salary >= 45000000/12)
+    ORDER BY 1;
+
 
 SELECT customer_id FROM orders;
 SELECT id, name, phone
     FROM customer
     WHERE id NOT IN (SELECT customer_id FROM orders);
+SELECT id, name, phone
+    FROM customer
+    WHERE id != ALL(SELECT customer_id FROM orders);
+SELECT id, name, phone
+    FROM customer c
+    WHERE NOT EXISTS (SELECT * FROM orders o WHERE o.customer_id = c.id);
 
 
 -- FROM
@@ -164,6 +154,11 @@ SELECT (SELECT name FROM beverage b WHERE b.id = o.beverage_id) AS beverage_name
         sum(beverage_cnt) AS sumcnt
     FROM orderdetails o
     GROUP BY beverage_id
+    ORDER BY SUM(beverage_cnt) DESC;
+SELECT (SELECT name FROM beverage b WHERE b.id = o.beverage_id) AS beverage_name,
+        sum(beverage_cnt) AS sumcnt
+    FROM orderdetails o
+    GROUP BY beverage_name
     ORDER BY SUM(beverage_cnt) DESC;
 
 SELECT b.name AS beverage_name, sum(o.beverage_cnt) AS sumcnt
