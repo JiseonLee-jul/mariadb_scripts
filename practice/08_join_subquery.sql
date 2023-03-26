@@ -1,38 +1,75 @@
 ------------------- 1. JOIN ----------------------
 ---- 실습데이터 생성
-CREATE TABLE t1 (col1 CHAR(1));
-CREATE TABLE t2 (col1 CHAR(1), col2 INT);
-INSERT INTO t1 VALUES ('A'), ('C'), ('D'), ('B'), ('D'), ('A');
-INSERT INTO t2 VALUES ('A', 1), ('B', 2), ('C', 3), ('E', 5);
 SELECT * FROM t1;
 SELECT * FROM t2;
 
 
 ---- a. 종류
 --INNER JOIN
-SELECT t2.col1, t2.col2 FROM t1 INNER JOIN t2 ON t1.col1 = t2.col1;
-SELECT t2.col1, t2.col2 FROM t1, t2 WHERE t1.col1 = t2.col1;
+SELECT 
+    e.id AS employees_id, 
+    e.name AS employees_name, 
+    d.id AS departments_id, 
+    d.name AS departments_name 
+FROM employees e INNER JOIN departments d 
+ON e.id = d.employee_id;
+SELECT 
+    e.id AS employees_id, 
+    e.name AS employees_name, 
+    d.id AS departments_id, 
+    d.name AS departments_name 
+FROM employees e, departments d 
+WHERE e.id = d.employee_id;
 
 -- LEFT JOIN
-SELECT t1.col1 AS 'tl.col1', t2.col1 AS 't2.col1', t2.col2 FROM t1 LEFT JOIN t2 ON t1.col1 = t2.col1;
+SELECT 
+    e.id AS employees_id, 
+    e.name AS employees_name, 
+    d.id AS departments_id, 
+    d.name AS departments_name 
+FROM employees e LEFT JOIN departments d 
+ON e.id = d.employee_id;
 
 -- RIGHT JOIN
-SELECT t1.col1 AS 'tl.col1', t2.col1 AS 't2.col1', t2.col2 FROM t1 RIGHT JOIN t2 ON t1.col1 = t2.col1;
-SELECT t1.col1 AS 'tl.col1', t2.col1 AS 't2.col1', t2.col2 FROM t2 LEFT JOIN t1 ON t2.col1 = t1.col1;
+SELECT 
+    e.id AS employees_id, 
+    e.name AS employees_name, 
+    d.id AS departments_id, 
+    d.name AS departments_name 
+FROM employees e RIGHT JOIN departments d 
+ON e.id = d.employee_id;
+SELECT 
+    e.id AS employees_id, 
+    e.name AS employees_name, 
+    d.id AS departments_id, 
+    d.name AS departments_name 
+FROM departments d LEFT JOIN employees e
+ON d.employee_id = e.id;
 
 -- CROSS JOIN
-SELECT t1.col1 AS 'tl.col1', t2.col1 AS 't2.col1', t2.col2 FROM t1 CROSS JOIN t2;
-SELECT t1.col1 AS 'tl.col1', t2.col1 AS 't2.col1', t2.col2 FROM t1, t2;
+SELECT 
+    e.id AS employees_id, 
+    e.name AS employees_name, 
+    d.id AS departments_id, 
+    d.name AS departments_name 
+FROM employees e CROSS JOIN departments d;
 
 -- FULL OUTER JOIN
-SELECT t1.col1 AS 'tl.col1', t2.col1 AS 't2.col1', t2.col2 
-    FROM t1 
-    LEFT JOIN t2 ON t1.col1 = t2.col1
+SELECT 
+    e.id AS employees_id, 
+    e.name AS employees_name, 
+    d.id AS departments_id, 
+    d.name AS departments_name 
+FROM employees e LEFT JOIN departments d 
+ON e.id = d.employee_id
 UNION
-SELECT t1.col1 AS 'tl.col1', t2.col1 AS 't2.col1', t2.col2 
-    FROM t1 
-    RIGHT JOIN t2 ON t1.col1 = t2.col1;
-
+SELECT 
+    e.id AS employees_id, 
+    e.name AS employees_name, 
+    d.id AS departments_id, 
+    d.name AS departments_name 
+FROM employees e RIGHT JOIN departments d 
+ON e.id = d.employee_id;
 
 
 ---- b. 활용
