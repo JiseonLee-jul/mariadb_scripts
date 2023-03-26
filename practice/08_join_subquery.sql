@@ -78,7 +78,6 @@ SELECT *
     FROM orderdetails o 
     INNER JOIN beverage b ON o.beverage_id = b.id
     ORDER BY 6;
-
 SELECT b.category as beverage_category, sum(beverage_cnt) as beverage_cnt
     FROM orderdetails o 
     INNER JOIN beverage b ON o.beverage_id = b.id
@@ -90,16 +89,12 @@ SELECT *
     FROM employee e
     INNER JOIN orders o ON e.id = o.emp_id
     ORDER BY 2;
-
-
 SELECT e.name, e.salary * 12 as salary_year, sum(total_cnt) as sum_cnt, sum(total_price) as sum_price
     FROM employee e
     INNER JOIN orders o ON e.id = o.emp_id
     WHERE o.date_ordered LIKE '2022-12-08%'
     GROUP BY e.name
     ORDER BY 4 DESC, 3 DESC;
-
-
 SELECT e.name, e.salary * 12 as salary_year, sum(total_cnt) as sum_cnt, sum(total_price) as sum_price
     FROM employee e
     INNER JOIN (SELECT date_ordered, total_cnt, total_price, emp_id 
@@ -108,6 +103,25 @@ SELECT e.name, e.salary * 12 as salary_year, sum(total_cnt) as sum_cnt, sum(tota
     ON e.id = o.emp_id
     GROUP BY e.name
     ORDER BY 4 DESC, 3 DESC;
+
+SELECT o.date_ordered, b.category, od.beverage_cnt
+FROM orders o INNER JOIN orderdetails od
+ON o.id = od.orders_id
+INNER JOIN beverage b 
+ON od.beverage_id = b.id
+ORDER BY o.id
+LIMIT 10;
+SELECT 
+    DAY(o.date_ordered) AS date_ordered, 
+    b.category,
+    SUM(od.beverage_cnt) AS cnt
+FROM orders o INNER JOIN orderdetails od
+ON o.id = od.orders_id
+INNER JOIN beverage b 
+ON od.beverage_id = b.id
+GROUP BY DATE(o.date_ordered), b.category
+ORDER BY 1, 3 DESC;
+
 
 -- select count(*) from orders where date_ordered like '2022-12-08%';
 -- select emp_id, sum(total_cnt) from orders where date_ordered like '2022-12-08%' group by emp_id;
@@ -133,14 +147,17 @@ DELETE s, e FROM salary s
 ------------------- 2. SUBQUERY ----------------------
 ---- 활용
 -- WHERE
-SELECT * FROM employee WHERE name = 'Ashli';
+SELECT * FROM customer WHERE phone = '020-4067-1802';
 SELECT customer_id, date_ordered, total_price, emp_id 
     FROM orders
     WHERE emp_id = (SELECT id FROM employee WHERE name = 'Ashli');
+SELECT customer_id, date_ordered, total_price, emp_id 
+    FROM orders
+    WHERE customer_id = (SELECT id FROM customer WHERE phone = '020-4067-1802');
 --
 SELECT o.customer_id, o.date_ordered, o.total_price, o.emp_id 
-    FROM orders o, employee e
-    WHERE o.emp_id=e.id AND e.name='Ashli';
+    FROM orders o, customer c
+    WHERE o.customer_id=c.id AND c.phone='020-4067-1802';
 --
 
 SELECT *, salary*12 AS salary_year 
@@ -188,7 +205,7 @@ SELECT (SELECT name FROM beverage b WHERE b.id = o.beverage_id) AS beverage_name
         beverage_cnt
     FROM orderdetails o;
 SELECT (SELECT name FROM beverage b WHERE b.id = o.beverage_id) AS beverage_name,
-        sum(beverage_cnt) AS sumcnt
+        SUM(beverage_cnt) AS sumcnt
     FROM orderdetails o
     GROUP BY beverage_id
     ORDER BY SUM(beverage_cnt) DESC;
@@ -197,6 +214,7 @@ SELECT (SELECT name FROM beverage b WHERE b.id = o.beverage_id) AS beverage_name
     FROM orderdetails o
     GROUP BY beverage_name
     ORDER BY SUM(beverage_cnt) DESC;
+
 
 SELECT b.name AS beverage_name, sum(o.beverage_cnt) AS sumcnt
     FROM beverage b 
