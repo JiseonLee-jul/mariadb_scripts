@@ -12,14 +12,14 @@ SELECT
     d.id AS departments_id, 
     d.name AS departments_name 
 FROM employees e INNER JOIN departments d 
-ON e.id = d.employee_id;
+ON e.department_id = d.id;
 SELECT 
     e.id AS employees_id, 
     e.name AS employees_name, 
     d.id AS departments_id, 
     d.name AS departments_name 
 FROM employees e, departments d 
-WHERE e.id = d.employee_id;
+WHERE e.department_id = d.id;
 
 -- LEFT JOIN
 SELECT 
@@ -28,7 +28,8 @@ SELECT
     d.id AS departments_id, 
     d.name AS departments_name 
 FROM employees e LEFT JOIN departments d 
-ON e.id = d.employee_id;
+ON e.department_id = d.id
+ORDER BY 1;
 
 -- RIGHT JOIN
 SELECT 
@@ -37,14 +38,14 @@ SELECT
     d.id AS departments_id, 
     d.name AS departments_name 
 FROM employees e RIGHT JOIN departments d 
-ON e.id = d.employee_id;
+ON e.department_id = d.id;
 SELECT 
     e.id AS employees_id, 
     e.name AS employees_name, 
     d.id AS departments_id, 
     d.name AS departments_name 
 FROM departments d LEFT JOIN employees e
-ON d.employee_id = e.id;
+ON e.department_id = d.id;
 
 -- CROSS JOIN
 SELECT 
@@ -61,7 +62,7 @@ SELECT
     d.id AS departments_id, 
     d.name AS departments_name 
 FROM employees e LEFT JOIN departments d 
-ON e.id = d.employee_id
+ON e.department_id = d.id
 UNION
 SELECT 
     e.id AS employees_id, 
@@ -69,7 +70,7 @@ SELECT
     d.id AS departments_id, 
     d.name AS departments_name 
 FROM employees e RIGHT JOIN departments d 
-ON e.id = d.employee_id;
+ON e.department_id = d.id;
 
 
 ---- b. 활용
