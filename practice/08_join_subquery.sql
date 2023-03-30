@@ -1,9 +1,4 @@
 ------------------- 1. JOIN ----------------------
----- 실습데이터 생성
-SELECT * FROM t1;
-SELECT * FROM t2;
-
-
 ---- a. 종류
 --INNER JOIN
 SELECT 
