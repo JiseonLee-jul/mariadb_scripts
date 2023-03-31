@@ -146,7 +146,7 @@ DELETE s, e FROM salary s
 SELECT * FROM customer WHERE phone = '020-4067-1802';
 SELECT customer_id, date_ordered, total_price, emp_id 
     FROM orders
-    WHERE emp_id = (SELECT id FROM employee WHERE name = 'Ashli');
+    WHERE customer_id = (SELECT id FROM customer WHERE phone = '020-4067-1802');
 SELECT customer_id, date_ordered, total_price, emp_id 
     FROM orders
     WHERE customer_id = (SELECT id FROM customer WHERE phone = '020-4067-1802');
