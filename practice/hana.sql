@@ -48,6 +48,12 @@ INSERT INTO salgrade VALUES
     ('D', 0, 199999); 
 SELECT e.emp_name, e.salary, s.grade
 FROM salgrade s, employees e
+WHERE e.salary = s.lowsalary;
+SELECT e.emp_name, e.salary, s.grade
+FROM salgrade s, employees e
+WHERE e.salary = s.highsalary;
+SELECT e.emp_name, e.salary, s.grade
+FROM salgrade s, employees e
 WHERE e.salary BETWEEN s.lowsalary AND s.highsalary;
 
 
