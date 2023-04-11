@@ -88,10 +88,222 @@ FROM solarsystem;
 
 
 -- Source Table과 집계 Table 비교
-SELECT 
-FROM departments d INNER JOIN employees e
-ON
+SELECT d.dept_name, e.salary
+FROM departments d INNER JOIN 
+(SELECT dept_id, SUM(salary) AS salary
+FROM employees
+GROUP BY dept_id) e
+ON d.dept_id = e.dept_id;
 
 CREATE TABLE dept_salary
+AS (SELECT 
+        d.dept_name AS 'deptname', 
+        e.salary
+    FROM departments d INNER JOIN 
+    (SELECT dept_id, SUM(salary) AS salary
+    FROM employees
+    GROUP BY dept_id) e
+    ON d.dept_id = e.dept_id);
 
+-- JOIN 두 번
+SELECT 
+    d.deptname,
+    v.salary AS 'source_table',
+    d.salary AS 'agg_table',
+    CASE 
+        WHEN v.salary = d.salary THEN 'Match'
+        ELSE 'Unmatch'
+    END AS 'Match or Not Match'
+FROM dept_salary d JOIN (
+SELECT 
+d.dept_name AS 'deptname', 
+e.salary
+FROM departments d INNER JOIN 
+(SELECT dept_id, SUM(salary) AS salary
+FROM employees
+GROUP BY dept_id) e
+ON d.dept_id = e.dept_id
+) v 
+ON d.deptname = v.deptname;
+
+SELECT 
+    d.dept_name AS 'deptname',  
+    e.salary AS 'source_table',
+    0 AS 'agg_table'
+FROM departments d INNER JOIN 
+(SELECT dept_id, SUM(salary) AS salary
+FROM employees
+GROUP BY dept_id) e
+ON d.dept_id = e.dept_id
+UNION ALL
+SELECT 
+    deptname,
+    0 AS 'source_table',
+    salary AS 'agg_table'
+FROM dept_salary;
+
+SELECT
+    m.deptname,
+    MAX(m.source_table) AS 'source_table',
+    MAX(m.agg_table) AS 'agg_table',
+    CASE 
+        WHEN MAX(m.source_table) = MAX(m.agg_table) THEN 'Match'
+        ELSE 'Not Match'
+    END AS 'Match or Not Match'
+FROM (SELECT 
+    d.dept_name AS 'deptname',  
+    e.salary AS 'source_table',
+    0 AS 'agg_table'
+FROM departments d INNER JOIN 
+(SELECT dept_id, SUM(salary) AS salary
+FROM employees
+GROUP BY dept_id) e
+ON d.dept_id = e.dept_id
+UNION ALL
+SELECT 
+    deptname,
+    0 AS 'source_table',
+    salary AS 'agg_table'
+FROM dept_salary) m
+GROUP BY m.deptname;
+
+
+-- 출력결과 순서 임의로 지정하기
+SELECT
+    m.deptname,
+    MAX(m.source_table) AS 'source_table',
+    MAX(m.agg_table) AS 'agg_table',
+    CASE 
+        WHEN MAX(m.source_table) = MAX(m.agg_table) THEN 'Match'
+        ELSE 'Not Match'
+    END AS 'Match or Not Match'
+FROM (SELECT 
+    d.dept_name AS 'deptname',  
+    e.salary AS 'source_table',
+    0 AS 'agg_table'
+FROM departments d INNER JOIN 
+(SELECT dept_id, SUM(salary) AS salary
+FROM employees
+GROUP BY dept_id) e
+ON d.dept_id = e.dept_id
+UNION ALL
+SELECT 
+    deptname,
+    0 AS 'source_table',
+    salary AS 'agg_table'
+FROM dept_salary) m
+GROUP BY m.deptname
+ORDER BY (CASE 
+        WHEN m.deptname = 'MANAGEMENT' THEN 1
+        WHEN m.deptname = 'RESEARCH' THEN 2
+        WHEN m.deptname = 'SALES_PARTNER' THEN 3
+        WHEN m.deptname = 'ACCOUTING' THEN 4
+        END
+);
+
+
+-- 수입, 지출 구분하여 SUM하고 흑자, 적자 출력
+CREATE TABLE expenseincome
+(class CHAR(2),
+costs INT);
+INSERT INTO expenseincome
+VALUES('A',9000),('A',2500),('A',1500),
+('B',4000),('B',6700),('B',5600),('B',4700),('B',1000),
+('C',3200),('C',3500),('C',8000),('C',5000),('C',7000),
+('D',5500),('D',3200),('D',3800),('D',2600),('D',4900),('D',6600);
+
+SELECT 
+    class,
+    CASE
+        WHEN class = 'D' THEN SUM((-1)*costs)
+        ELSE SUM(costs)
+    END AS 'sub total',
+    CASE
+        WHEN class = 'D' THEN '지출'
+        ELSE '수입'
+    END AS 'notes'
+FROM expenseincome
+GROUP BY class;
+
+SELECT
+    c.id,
+    e.class,
+    CASE
+        WHEN e.class = 'D' THEN SUM((-1)*e.costs)
+        ELSE SUM(e.costs)
+    END AS 'sub total',
+    CASE
+        WHEN class = 'D' THEN '지출'
+        ELSE '수입'
+    END AS 'notes'
+FROM expenseincome e, copy_dual2 c
+GROUP BY c.id, e.class;
+
+SELECT
+    c.id,
+    e.class,
+    CASE
+        WHEN c.id = 1 THEN IF(e.class = 'D', SUM((-1)*e.costs), SUM(e.costs))
+        WHEN c.id = 2 THEN SUM(e.costs)
+    END AS 'sub total',
+    CASE
+        WHEN class = 'D' THEN '지출'
+        ELSE '수입'
+    END AS 'notes'
+FROM expenseincome e, copy_dual2 c
+GROUP BY c.id, e.class;
+
+SELECT
+    c.id,
+    e.class,
+    CASE
+        WHEN c.id = 1 THEN (
+            CASE
+                WHEN e.class = 'D' THEN SUM((-1)*e.costs)
+                ELSE SUM(e.costs) 
+            END)
+        WHEN c.id = 2 THEN SUM(
+            CASE 
+                WHEN e.class = 'D' THEN (-1)*e.costs
+                ELSE e.costs  
+            END)
+    END AS 'sub total',
+    CASE
+        WHEN class = 'D' THEN '지출'
+        ELSE '수입'
+    END AS 'notes'
+FROM expenseincome e, copy_dual2 c
+GROUP BY c.id, e.class;
+
+SELECT
+    CASE 
+        WHEN c.id = 1 THEN e.class
+        ELSE 'Total'
+    END AS 'class', 
+    CASE
+        WHEN c.id = 1 THEN (
+            CASE
+                WHEN e.class = 'D' THEN SUM((-1)*e.costs)
+                ELSE SUM(e.costs) 
+            END)
+        WHEN c.id = 2 THEN SUM(
+            CASE 
+                WHEN e.class = 'D' THEN (-1)*e.costs
+                ELSE e.costs  
+            END)
+    END AS 'sub total',
+    CASE
+        WHEN c.id = 1 THEN (
+            CASE
+                WHEN class = 'D' THEN '지출'
+                ELSE '수입' 
+            END)
+        WHEN c.id = 2 THEN IF(SUM(
+            CASE 
+                WHEN e.class = 'D' THEN (-1)*e.costs
+                ELSE e.costs  
+            END) >= 0, '흑자', '적자')
+    END AS 'notes'
+FROM expenseincome e, copy_dual2 c
+GROUP BY CASE WHEN c.id = 1 THEN e.class ELSE 'Total' END;
 
