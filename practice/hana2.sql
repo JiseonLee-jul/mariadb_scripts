@@ -254,28 +254,6 @@ FROM expenseincome e, copy_dual2 c
 GROUP BY c.id, e.class;
 
 SELECT
-    c.id,
-    e.class,
-    CASE
-        WHEN c.id = 1 THEN (
-            CASE
-                WHEN e.class = 'D' THEN SUM((-1)*e.costs)
-                ELSE SUM(e.costs) 
-            END)
-        WHEN c.id = 2 THEN SUM(
-            CASE 
-                WHEN e.class = 'D' THEN (-1)*e.costs
-                ELSE e.costs  
-            END)
-    END AS 'sub total',
-    CASE
-        WHEN class = 'D' THEN '지출'
-        ELSE '수입'
-    END AS 'notes'
-FROM expenseincome e, copy_dual2 c
-GROUP BY c.id, e.class;
-
-SELECT
     CASE 
         WHEN c.id = 1 THEN e.class
         ELSE 'Total'
