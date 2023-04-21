@@ -108,8 +108,7 @@ CREATE TABLE copy_dual4
 INSERT INTO copy_dual4
 VALUES(1),(2),(3),(4);
 
-SELECT c.*, r.*
-FROM rctrans r, copy_dual4 c;
+
 
 SELECT CASE m.id 
        WHEN 1 THEN m.name1
@@ -156,7 +155,7 @@ CREATE TABLE copy_dual8
 INSERT INTO copy_dual8
 VALUES(1),(2),(3),(4),(5),(6),(7),(8);
 
-SELECT c.*, i.* FROM copy_dual8 c, instsense i
+SELECT c.*, i.* FROM copy_dual8 c, instsense i;
 
 SELECT CASE ci.id 
            WHEN 1 THEN ci.inst1

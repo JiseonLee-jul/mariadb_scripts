@@ -33,7 +33,7 @@ ORDER BY 1, 2;
 
 SELECT 
     CASE WHEN c.id=1 THEN class ELSE 'Total' END AS 'Class', 
-    SUM(m.tcosts)
+    SUM(m.tcosts) AS 'sub total' 
 FROM (SELECT 
         class, 
         CASE WHEN class='D' THEN SUM(costs) * -1 ELSE SUM(costs) END AS tcosts
@@ -44,7 +44,7 @@ GROUP BY CASE WHEN c.id=1 THEN class ELSE 'Total' END;
 -- notes 칼럼 출력하기
 SELECT 
     CASE WHEN c.id=1 THEN class ELSE 'Total' END AS 'Class', 
-    SUM(m.tcosts),
+    SUM(m.tcosts) AS 'sub total',
     CASE
         WHEN c.id = 1 THEN (CASE WHEN class = 'D' THEN '지출' ELSE '수입' END)
         WHEN c.id = 2 THEN 
@@ -59,7 +59,7 @@ GROUP BY CASE WHEN c.id=1 THEN class ELSE 'Total' END;
 
 SELECT 
     CASE WHEN c.id=1 THEN class ELSE 'Total' END AS 'Class', 
-    SUM(m.tcosts),
+    SUM(m.tcosts) AS 'sub total',
     CASE WHEN (CASE WHEN c.id=1 THEN class ELSE 'Total' END) = 'D' THEN '지출' 
                 ELSE CASE WHEN (CASE WHEN c.id=1 THEN class ELSE 'Total' END) in ('A', 'B', 'C')  THEN '수입'
                 ELSE CASE WHEN ((CASE WHEN c.id=1 THEN class ELSE 'Total' END)='Total' and SUM(m.tcosts) > 0) THEN '흑자' ELSE '적자'END END END 'notes'
@@ -82,7 +82,7 @@ WHERE class = 'D';
 
 SELECT 
     CASE WHEN c.id=1 THEN class ELSE 'Total' END AS 'Class', 
-    SUM(m.tcosts),
+    SUM(m.tcosts) AS 'sub total',
     CASE
         WHEN c.id = 1 THEN (CASE WHEN class = 'D' THEN '지출' ELSE '수입' END)
         WHEN c.id = 2 THEN 
