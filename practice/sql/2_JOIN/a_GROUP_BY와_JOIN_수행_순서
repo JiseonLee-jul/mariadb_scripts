@@ -1,0 +1,28 @@
+-- JOIN -> GROUP BY
+SELECT COUNT(*) FROM departments;
+SELECT COUNT(*) FROM employees;
+
+SELECT dept_name, emp_id
+FROM departments d INNER JOIN employees e
+ON d.dept_id = e.dept_id;
+
+SELECT COUNT(*)
+FROM departments d INNER JOIN employees e
+ON d.dept_id = e.dept_id;
+
+SELECT dept_name '부서명', COUNT(*) '부서별 인원'
+FROM (SELECT dept_name, emp_id
+        FROM departments d INNER JOIN employees e
+        ON d.dept_id = e.dept_id) m
+GROUP BY dept_name;
+
+-- GROUP BY -> JOIN
+SELECT dept_id, COUNT(*) FROM employees
+GROUP BY dept_id;
+
+SELECT d.dept_name '부서명', e.COUNT '부서별 인원'
+FROM departments d INNER JOIN (SELECT dept_id, COUNT(*) 'COUNT'
+                                FROM employees GROUP BY dept_id) e
+ON d.dept_id = e.dept_id;
+
+
