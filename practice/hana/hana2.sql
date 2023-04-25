@@ -170,6 +170,8 @@ ON d.dept_id = e.dept_id
 ) v 
 ON d.deptname = v.deptname;
 
+-- 답!
+
 SELECT 
     d.dept_name AS 'deptname',  
     e.salary AS 'source_table',

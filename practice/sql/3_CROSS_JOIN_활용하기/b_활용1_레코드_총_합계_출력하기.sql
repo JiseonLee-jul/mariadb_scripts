@@ -83,3 +83,6 @@ FROM departments d RIGHT JOIN
      FROM employees
      GROUP BY dept_id WITH ROLLUP) e
 ON d.dept_id = e.dept_id;
+
+-- IFNULL / NVL
+SELECT IFNULL(NULL, 0), IFNULL(1, 0);

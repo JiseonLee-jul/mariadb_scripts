@@ -12,6 +12,7 @@ INSERT INTO cost_exam
 VALUES('202201', 3000000), ('202202', 2700000), ('202204', 4700000), ('202206', 1500000), 
       ('202207', 1000000), ('202208', 3000000), ('202210', 2500000), ('202212', 5000000);
 
+
 -- FULL OUTER JOIN
 SELECT s.fy_date, s.sales_result, c.cost_result
       FROM (SELECT fy_date, sales_result FROM sales_exam) s

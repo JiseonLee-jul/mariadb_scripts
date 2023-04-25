@@ -4,6 +4,9 @@ AS SELECT * FROM departments;
 INSERT INTO departments2
 SELECT * FROM departments;
 
+CREATE TABLE departments2 LIKE departments;
+
+
 -- DISTINCT
 SELECT DISTINCT dept_id, dept_name, loc_id 
 FROM departments2;
