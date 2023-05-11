@@ -12,6 +12,45 @@ SELECT
     amount - LAG(amount,1) OVER (ORDER BY yearmonth) AS '지난달대비 증감'
 FROM salesamount;
 
+
+-- WINDOW 함수
+SELECT dept_id, SUM(salary) 
+FROM employees 
+GROUP BY dept_id;
+
+SELECT dept_id, 
+SUM(salary) OVER(PARTITION BY dept_id) 
+FROM employees;
+
+SELECT dept_id, emp_name,
+SUM(salary) OVER() AS 'total_salary',
+SUM(salary) OVER(PARTITION BY dept_id) AS 'dept_salary'
+FROM employees;
+
+SELECT dept_id, emp_name ,SUM(salary) 
+FROM employees 
+GROUP BY dept_id;
+
+SELECT dept_id,
+    LAG(dept_id, -2) OVER (ORDER BY dept_id) AS '-2',
+    LAG(dept_id, -1) OVER (ORDER BY dept_id) AS '-1',
+    LAG(dept_id, 0) OVER (ORDER BY dept_id) AS '0',
+    LAG(dept_id) OVER (ORDER BY dept_id) AS '',
+    LAG(dept_id, 1) OVER (ORDER BY dept_id) AS '1',
+    LAG(dept_id, 2) OVER (ORDER BY dept_id) AS '2'
+FROM departments;
+
+SELECT dept_id,
+    LEAD(dept_id, -2) OVER (ORDER BY dept_id) AS '-2',
+    LEAD(dept_id, -1) OVER (ORDER BY dept_id) AS '-1',
+    LEAD(dept_id, 0) OVER (ORDER BY dept_id) AS '0',
+    LEAD(dept_id) OVER (ORDER BY dept_id) AS '',
+    LEAD(dept_id, 1) OVER (ORDER BY dept_id) AS '1',
+    LEAD(dept_id, 2) OVER (ORDER BY dept_id) AS '2'
+FROM departments;
+
+
+-- LAG 함수 사용 안 하기
 SELECT 
     CAST(yearmonth AS INTEGER), 
     amount AS '이번달 실적', 
