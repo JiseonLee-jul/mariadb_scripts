@@ -15,6 +15,7 @@ AS (SELECT
     GROUP BY dept_id) e
     ON d.dept_id = e.dept_id);
 
+
 -- JOIN 두 번
 SELECT 
     d.deptname,
