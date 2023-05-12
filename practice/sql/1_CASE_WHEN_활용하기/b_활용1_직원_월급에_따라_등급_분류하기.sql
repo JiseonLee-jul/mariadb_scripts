@@ -26,7 +26,7 @@ SELECT
         WHEN FLOOR(salary/1000000) >= 4 THEN 'Grade A'
         WHEN FLOOR(salary/1000000) = 3 THEN 'Grade B'
         WHEN FLOOR(salary/1000000) = 2 THEN 'Grade C'
-        ELSE 'Grade D' 
+        WHEN FLOOR(salary/1000000) < 2 THEN 'Grade D' 
     END 'Salary Grade'
 FROM employees;
 
@@ -36,9 +36,21 @@ SELECT
         WHEN FLOOR(salary/1000000) >= 4 THEN 'Grade A'
         WHEN FLOOR(salary/1000000) = 3 THEN 'Grade B'
         WHEN FLOOR(salary/1000000) = 2 THEN 'Grade C'
-        WHEN FLOOR(salary/1000000) < 2 THEN 'Grade D' 
+        ELSE 'Grade D' 
     END 'Salary Grade'
 FROM employees;
+
+SELECT 
+    emp_name, 
+    CASE 
+        WHEN TRUNCATE(salary/1000000, 0) >= 4 THEN 'Grade A'
+        WHEN TRUNCATE(salary/1000000, 0) = 3 THEN 'Grade B'
+        WHEN TRUNCATE(salary/1000000, 0) = 2 THEN 'Grade C'
+        ELSE 'Grade D' 
+    END 'Salary Grade'
+FROM employees;
+
+
 
 -- salgrade 테이블 생성 후 JOIN
 CREATE TABLE salgrade

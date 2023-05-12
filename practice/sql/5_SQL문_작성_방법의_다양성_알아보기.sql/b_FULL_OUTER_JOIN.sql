@@ -22,7 +22,12 @@ SELECT s.fy_date, s.sales_result, c.cost_result
 SELECT c.fy_date, s.sales_result, c.cost_result
       FROM (SELECT fy_date, sales_result FROM sales_exam) s
       RIGHT JOIN (SELECT fy_date, cost_result FROM cost_exam) c
-      ON s.fy_date = c.fy_date
+      ON s.fy_date = c.fy_date;
+
+SELECT s.fy_date, s.sales_result, c.cost_result
+      FROM (SELECT fy_date, sales_result FROM sales_exam) s
+      RIGHT JOIN (SELECT fy_date, cost_result FROM cost_exam) c
+      ON s.fy_date = c.fy_date;
 
 SELECT s.fy_date, s.sales_result, c.cost_result
       FROM (SELECT fy_date, sales_result FROM sales_exam) s
@@ -32,7 +37,7 @@ SELECT s.fy_date, s.sales_result, c.cost_result
       SELECT c.fy_date, s.sales_result, c.cost_result
       FROM (SELECT fy_date, sales_result FROM sales_exam) s
       RIGHT JOIN (SELECT fy_date, cost_result FROM cost_exam) c
-      ON s.fy_date = c.fy_date
+      ON s.fy_date = c.fy_date;
 
 SELECT 
     m.fy_date, 
@@ -47,7 +52,8 @@ FROM (SELECT s.fy_date, s.sales_result, c.cost_result
       FROM (SELECT fy_date, sales_result FROM sales_exam) s
       RIGHT JOIN (SELECT fy_date, cost_result FROM cost_exam) c
       ON s.fy_date = c.fy_date) m
-GROUP BY m.fy_date;
+GROUP BY m.fy_date
+ORDER BY; -- SUM 안 할 수도 있다!
 
 -- 왜 SUM??
 SELECT 
@@ -83,4 +89,5 @@ SELECT m.fy_date, SUM(m.sales_result) '매출 실적', SUM(m.cost_result) '비�
 FROM (SELECT fy_date, sales_result, 0 'cost_result' FROM sales_exam
 UNION ALL
 SELECT fy_date, 0 'sales_result', cost_result FROM cost_exam) m
-GROUP BY m.fy_date;
+GROUP BY m.fy_date
+ORDER BY 1;

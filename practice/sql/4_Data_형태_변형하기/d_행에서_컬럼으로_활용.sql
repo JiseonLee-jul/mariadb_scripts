@@ -67,7 +67,7 @@ SELECT
         WHEN 6 THEN ci.inst6
         WHEN 7 THEN ci.inst7
         WHEN 8 THEN ci.inst8 END 'inst'
-FROM (SELECT c.*, i.* FROM copy_dual8 c, instsense i) ci
+FROM (SELECT c.*, i.* FROM copy_dual8 c, instsense i) ci;
 
 SELECT t.inst, COUNT(*) AS count
 FROM (SELECT CASE ci.id 

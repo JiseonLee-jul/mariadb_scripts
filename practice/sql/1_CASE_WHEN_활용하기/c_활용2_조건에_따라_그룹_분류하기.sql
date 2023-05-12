@@ -24,4 +24,17 @@ SELECT
     CASE WHEN MOD(id, 2) = 0 THEN 'even' ELSE 'odd' END AS 'Grade', 
     SUM(price)
 FROM lookup_group
-GROUP BY MOD(id, 2);
+GROUP BY MOD(id, 2); -- 에러
+
+-- 고민해보기
+SELECT
+    CASE WHEN c.id = 1 THEN l.Grade ELSE 'Total' END AS 'Grade',
+    SUM(l.price) AS 'price' 
+FROM (
+    SELECT 
+    CASE WHEN MOD(id, 2) = 0 THEN 'even' ELSE 'odd' END AS 'Grade', 
+    SUM(price) AS 'price'
+    FROM lookup_group
+    GROUP BY CASE WHEN MOD(id, 2) = 0 THEN 'even' ELSE 'odd' END
+) l, copy_dual2 c
+GROUP BY CASE WHEN c.id = 1 THEN l.Grade ELSE 'Total' END;

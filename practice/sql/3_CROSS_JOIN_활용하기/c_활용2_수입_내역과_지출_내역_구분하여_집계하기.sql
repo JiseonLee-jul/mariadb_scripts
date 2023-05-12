@@ -57,6 +57,7 @@ FROM (SELECT
       GROUP BY class) m, copy_dual2 c
 GROUP BY CASE WHEN c.id=1 THEN class ELSE 'Total' END;
 
+--[참고]
 SELECT 
     CASE WHEN c.id=1 THEN class ELSE 'Total' END AS 'Class', 
     SUM(m.tcosts) AS 'sub total',

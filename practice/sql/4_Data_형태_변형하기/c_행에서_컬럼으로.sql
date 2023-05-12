@@ -20,7 +20,7 @@ SELECT name4
 FROM rctrans;
 
 CREATE TABLE copy_dual4 (id INT);
-INSERT VALUES copy_dual4 INTO (1), (2), (3), (4);
+INSERT INTO copy_dual4 VALUES (1), (2), (3), (4);
 
 SELECT c.*, r.*
 FROM rctrans r, copy_dual4 c;

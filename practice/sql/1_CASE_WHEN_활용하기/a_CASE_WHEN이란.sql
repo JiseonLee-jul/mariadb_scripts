@@ -8,3 +8,6 @@ SELECT * FROM CASE_example;
 
 SELECT CASE WHEN name = 'A' THEN 'Grade A' ELSE 'Grade BCD' END
 FROM CASE_example;
+
+SELECT CASE WHEN name = 'A' THEN 'Grade A' ELSE 'Grade BCD' END AS 'Grade'
+FROM CASE_example;
