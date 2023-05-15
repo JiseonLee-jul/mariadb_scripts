@@ -11,7 +11,7 @@ VALUES ('A',9000),('A',2500),('A',1500),
 -- 클래스별로 수입 및 지출 내역 구분하여 집계하기
 SELECT 
     class, 
-    SUM(costs) END AS tcosts
+    SUM(costs) AS tcosts
 FROM expenseincome
 GROUP BY class;
 
