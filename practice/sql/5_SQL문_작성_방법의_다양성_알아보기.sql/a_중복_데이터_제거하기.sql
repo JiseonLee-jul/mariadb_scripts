@@ -7,11 +7,6 @@ SELECT * FROM departments;
 DROP TABLE departments2;
 
 CREATE TABLE departments2 LIKE departments;
-INSERT INTO departments2
-SELECT * FROM departments;
-INSERT INTO departments2
-SELECT * FROM departments;
-
 
 
 -- DISTINCT

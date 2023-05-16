@@ -42,6 +42,10 @@ FROM (SELECT
 GROUP BY CASE WHEN c.id=1 THEN class ELSE 'Total' END;
 
 -- notes 칼럼 출력하기
+SELECT @@sql_mode;
+SET SESSION sql_mode = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+-- 참고 : SET SESSION sql_mode = 'ONLY_FULL_GROUP_BY, STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'; 
+--
 SELECT 
     CASE WHEN c.id=1 THEN class ELSE 'Total' END AS 'Class', 
     SUM(m.tcosts) AS 'sub total',
@@ -76,6 +80,9 @@ GROUP BY CASE WHEN c.id=1 THEN class ELSE 'Total' END;
 CREATE TABLE expenseincome2
 AS SELECT * FROM expenseincome;
 
+-- Safe 모드 해제 : Edit -> Prefrences -> SQL Editor -> Safe Updates 해제
+-- SHOW VARIABLES LIKE '%SQL_SAFE_UPDATES%';
+-- SET SQL_SAFE_UPDATES = 0;
 UPDATE expenseincome2
 SET costs = costs * 3
 WHERE class = 'D';

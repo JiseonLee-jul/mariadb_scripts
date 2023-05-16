@@ -1,4 +1,3 @@
-
 CREATE TABLE crtrans (name CHAR(2));
 INSERT INTO crtrans VALUES('A'),('B'),('C'),('D');
 SELECT * FROM crtrans;

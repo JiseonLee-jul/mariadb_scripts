@@ -53,7 +53,7 @@ FROM (SELECT s.fy_date, s.sales_result, c.cost_result
       RIGHT JOIN (SELECT fy_date, cost_result FROM cost_exam) c
       ON s.fy_date = c.fy_date) m
 GROUP BY m.fy_date
-ORDER BY; -- SUM 안 할 수도 있다!
+ORDER BY 1; -- SUM 안 할 수도 있다!
 
 -- 왜 SUM??
 SELECT 

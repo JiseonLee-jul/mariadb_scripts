@@ -35,8 +35,6 @@ SELECT dept_id,
 FROM departments;
 
 SELECT dept_id,
-    LEAD(dept_id, -2) OVER (ORDER BY dept_id) AS '-2',
-    LEAD(dept_id, -1) OVER (ORDER BY dept_id) AS '-1',
     LEAD(dept_id, 0) OVER (ORDER BY dept_id) AS '0',
     LEAD(dept_id) OVER (ORDER BY dept_id) AS '',
     LEAD(dept_id, 1) OVER (ORDER BY dept_id) AS '1',
@@ -46,38 +44,38 @@ FROM departments;
 
 -- LAG 함수 사용 안 하기
 SELECT 
-    CAST(yearmonth AS UNSIGNED), 
+    CAST(yearmonth AS SIGNED), 
     amount AS '이번달 실적', 
     0 AS '지난달 실적'
 FROM salesamount;
 
 SELECT 
-    CAST(yearmonth AS UNSIGNED) + 1, 
+    CAST(yearmonth AS SIGNED) + 1, 
     0 AS '이번달 실적', 
     amount AS '지난달 실적' 
 FROM salesamount;
 
 SELECT 
-    CAST(yearmonth AS UNSIGNED), amount AS '이번달 실적', 0 AS '지난달 실적'
+    CAST(yearmonth AS SIGNED), amount AS '이번달 실적', 0 AS '지난달 실적'
 FROM salesamount
 UNION ALL
 SELECT 
-    CAST(yearmonth AS UNSIGNED) + 1, 0 AS '이번달 실적', amount AS '지난달 실적' 
+    CAST(yearmonth AS SIGNED) + 1, 0 AS '이번달 실적', amount AS '지난달 실적' 
 FROM salesamount;
 
 SELECT m.yearmonth, MAX(m.thismonth_amount), MAX(nextmonth_amount)
-FROM (SELECT CAST(yearmonth AS UNSIGNED)  AS 'yearmonth', amount AS 'thismonth_amount', 0 AS 'nextmonth_amount' 
+FROM (SELECT CAST(yearmonth AS SIGNED)  AS 'yearmonth', amount AS 'thismonth_amount', 0 AS 'nextmonth_amount' 
       FROM salesamount
       UNION ALL
-      SELECT CAST(yearmonth AS UNSIGNED) + 1 AS  'yearmonth_before', 0 AS 'thismonth_amount', amount AS 'nextmonth_amount' 
+      SELECT CAST(yearmonth AS SIGNED) + 1 AS  'yearmonth_before', 0 AS 'thismonth_amount', amount AS 'nextmonth_amount' 
     FROM salesamount) m
 GROUP BY m.yearmonth;
 
 SELECT m.yearmonth, MAX(m.thismonth_amount), MAX(nextmonth_amount)
-FROM (SELECT CAST(yearmonth AS UNSIGNED)  AS 'yearmonth', amount AS 'thismonth_amount', 0 AS 'nextmonth_amount' 
+FROM (SELECT CAST(yearmonth AS SIGNED)  AS 'yearmonth', amount AS 'thismonth_amount', 0 AS 'nextmonth_amount' 
       FROM salesamount
       UNION ALL
-      SELECT CAST(yearmonth AS UNSIGNED) + 1 AS  'yearmonth_before', 0 AS 'thismonth_amount', amount AS 'nextmonth_amount' 
+      SELECT CAST(yearmonth AS SIGNED) + 1 AS  'yearmonth_before', 0 AS 'thismonth_amount', amount AS 'nextmonth_amount' 
     FROM salesamount) m
 GROUP BY m.yearmonth
 HAVING yearmonth NOT IN (202201, 202213);
@@ -87,10 +85,10 @@ SELECT
     MAX(m.thismonth_amount) "이번달 실적", 
     MAX(nextmonth_amount) "지난달 실적", 
     MAX(m.thismonth_amount)-MAX(nextmonth_amount) "이번달 실적 - 지난달 실적"
-FROM (SELECT CAST(yearmonth AS UNSIGNED)  AS 'yearmonth', amount AS 'thismonth_amount', 0 AS 'nextmonth_amount' 
+FROM (SELECT CAST(yearmonth AS SIGNED)  AS 'yearmonth', amount AS 'thismonth_amount', 0 AS 'nextmonth_amount' 
       FROM salesamount
       UNION ALL
-      SELECT CAST(yearmonth AS UNSIGNED) + 1 AS  'yearmonth_before', 0 AS 'thismonth_amount', amount AS 'nextmonth_amount' 
+      SELECT CAST(yearmonth AS SIGNED) + 1 AS  'yearmonth_before', 0 AS 'thismonth_amount', amount AS 'nextmonth_amount' 
     FROM salesamount) m
 GROUP BY m.yearmonth
 HAVING yearmonth NOT IN (202201, 202213);
